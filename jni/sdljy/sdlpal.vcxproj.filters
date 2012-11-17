@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{90d46d8e-95fc-45e3-b934-65d2c09e77df}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="adplug">
+      <UniqueIdentifier>{49ebbf5e-fd1f-4cee-8c12-5e6d8219f389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{ddd28ff1-51b9-4976-90fe-0d3d40c2f55d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="native_midi">
+      <UniqueIdentifier>{07ee7aa7-49ad-4456-9950-d5eaafe7554d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libmad">
+      <UniqueIdentifier>{6d6d0328-2840-4ab8-ac05-85612b7e84bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{b7d3d4fd-1635-41dd-8ba3-cc9959e54c87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="adplug\binfile.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\binio.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\dosbox_opl.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\emuopl.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\fmopl.c">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\fprovide.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\player.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\rix.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="adplug\surroundopl.cpp">
+      <Filter>adplug</Filter>
+    </ClCompile>
+    <ClCompile Include="native_midi\native_midi_common.c">
+      <Filter>native_midi</Filter>
+    </ClCompile>
+    <ClCompile Include="native_midi\native_midi_win32.c">
+      <Filter>native_midi</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\bit.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\decoder.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\fixed.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\frame.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\huffman.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\layer12.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\layer3.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\music_mad.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\stream.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\synth.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="libmad\timer.c">
+      <Filter>libmad</Filter>
+    </ClCompile>
+    <ClCompile Include="charset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jymain.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="luafun.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="piccache.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sdlfun.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lapi.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lauxlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lbaselib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lcode.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldblib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldebug.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldo.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldump.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lfunc.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lgc.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\linit.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\liolib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\llex.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lmathlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lmem.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\loadlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lobject.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lopcodes.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\loslib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lparser.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lstate.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lstring.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lstrlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ltable.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ltablib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ltm.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lua.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lundump.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lvm.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lzio.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\print.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\llvm\3rdframework\sdl\src\main\windows\SDL_windows_main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adplug\binfile.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\binio.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\demuopl.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\dosbox_opl.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\emuopl.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\fmopl.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\fprovide.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\opl.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\player.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\rix.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="adplug\surroundopl.h">
+      <Filter>adplug</Filter>
+    </ClInclude>
+    <ClInclude Include="native_midi\native_midi.h">
+      <Filter>native_midi</Filter>
+    </ClInclude>
+    <ClInclude Include="native_midi\native_midi_common.h">
+      <Filter>native_midi</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\bit.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\decoder.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\fixed.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\frame.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\huffman.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\layer12.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\layer3.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\libmad_config.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\libmad_global.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\mad.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\music_mad.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\stream.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\synth.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="libmad\timer.h">
+      <Filter>libmad</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jymain.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="list.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luafun.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lapi.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lauxlib.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lcode.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ldebug.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ldo.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lfunc.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lgc.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\llex.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\llimits.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lmem.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lobject.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lopcodes.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lparser.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lstate.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lstring.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ltable.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ltm.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lua.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\luaconf.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lualib.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lundump.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lvm.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lzio.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sdlpal.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="sdlpal.ico">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="libmad\D.dat">
+      <Filter>libmad</Filter>
+    </CustomBuild>
+    <CustomBuild Include="libmad\imdct_s.dat">
+      <Filter>libmad</Filter>
+    </CustomBuild>
+    <CustomBuild Include="libmad\qc_table.dat">
+      <Filter>libmad</Filter>
+    </CustomBuild>
+    <CustomBuild Include="libmad\rq_table.dat">
+      <Filter>libmad</Filter>
+    </CustomBuild>
+    <CustomBuild Include="libmad\sf_table.dat">
+      <Filter>libmad</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>
