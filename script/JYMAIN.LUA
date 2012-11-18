@@ -16,6 +16,7 @@ function IncludeFile()              --导入其他模块
     --dofile("config.lua");       --此文件在C函数中预先加载。这里就不加载了
     dofile(CONFIG.ScriptPath .. "jyconst.lua");
     dofile(CONFIG.ScriptPath .. "jymodify.lua");
+    dofile(CONFIG.ScriptPath .. "face_name.lua");
 end
 
 
@@ -48,6 +49,8 @@ function SetGlobal()   --设置游戏内部使用的全程变量
    JY.Data_Wugong=nil;
    JY.Data_Shop=nil;
 
+   JY.WalkDir = -1;
+   JY.LastWalkTime = 0;
    JY.MyCurrentPic=0;       --主角当前走路贴图在贴图文件中偏移
    JY.MyPic=0;              --主角当前贴图
    JY.MyTick=0;             --主角没有走路的持续帧数
@@ -341,9 +344,8 @@ end
 function Game_MMap()      --主地图
 
     local direct = -1;
-    local keypress = lib.GetKey();
+    local keypress = lib.GetKeyPress();
     if keypress ~= -1 then
-        lib.Debug(string.format("run time=%d",lib.GetTime()));
 	    JY.MyTick=0;
 		if keypress==VK_ESCAPE then
 			MMenu();
@@ -354,21 +356,34 @@ function Game_MMap()      --主地图
 			JY.oldMMapY=-1;
 		elseif keypress==VK_UP then
 			direct=0;
+			JY.WalkDir = 0;
 		elseif keypress==VK_DOWN then
 			direct=3;
+			JY.WalkDir = 3;
 		elseif keypress==VK_LEFT then
 			direct=2;
+			JY.WalkDir = 2;
 		elseif keypress==VK_RIGHT then
 			direct=1;
+			JY.WalkDir = 1;
 		end
+	else
+	    JY.WalkDir = -1;
     end
 
     local x,y;              --按照方向键要到达的坐标
-    if direct ~= -1 then   --按下了光标键
-        AddMyCurrentPic();         --增加主角贴图编号，产生走路效果
-        x=JY.Base["人X"]+CC.DirectX[direct+1];
-        y=JY.Base["人Y"]+CC.DirectY[direct+1];
-        JY.Base["人方向"]=direct;
+    if JY.WalkDir ~= -1 then   --按下了光标键
+        local time = lib.GetTime();
+        if time - JY.LastWalkTime > CC.WalkSpeed then
+            AddMyCurrentPic();         --增加主角贴图编号，产生走路效果
+            x=JY.Base["人X"]+CC.DirectX[JY.WalkDir+1];
+            y=JY.Base["人Y"]+CC.DirectY[JY.WalkDir+1];
+            JY.Base["人方向"]=JY.WalkDir;
+            JY.LastWalkTime = time;
+        else
+            x=JY.Base["人X"];
+            y=JY.Base["人Y"];
+        end
     else
         x=JY.Base["人X"];
         y=JY.Base["人Y"];
@@ -1267,7 +1282,7 @@ function Game_SMap()         --场景处理主函数
 
 	DrawSMap(CONFIG.FastShowScreen);
 	if CC.ShowXY==1 then
-		DrawString(10,CC.ScreenH-20,string.format("%s %d %d",JY.Scene[JY.SubScene]["名称"],JY.Base["人X1"],JY.Base["人Y1"]) ,C_GOLD,16);
+		DrawString(10,CC.ScreenH-20,string.format("%s (%d, %d)",JY.Scene[JY.SubScene]["名称"],JY.Base["人X1"],JY.Base["人Y1"]) ,C_GOLD,16);
 	end
 
 	ShowScreen(CONFIG.FastShowScreen);
@@ -1340,7 +1355,7 @@ function Game_SMap()         --场景处理主函数
     end
 
     local x,y;
-    local keypress = lib.GetKey();
+    local keypress = lib.GetKeyPress();
     local direct=-1;
     if keypress ~= -1 then
 		JY.MyTick=0;
@@ -1350,12 +1365,16 @@ function Game_SMap()         --场景处理主函数
 	        JY.oldSMapY=-1;
 		elseif keypress==VK_UP then
 			direct=0;
+			JY.WalkDir = 0;
 		elseif keypress==VK_DOWN then
 			direct=3;
+			JY.WalkDir = 3;
 		elseif keypress==VK_LEFT then
 			direct=2;
+			JY.WalkDir = 2;
 		elseif keypress==VK_RIGHT then
 			direct=1;
+			JY.WalkDir = 1;
 		elseif keypress==VK_SPACE or keypress==VK_RETURN  then
             if JY.Base["人方向"]>=0 then        --当前方向下一个位置
                 local d_num=GetS(JY.SubScene,JY.Base["人X1"]+CC.DirectX[JY.Base["人方向"]+1],JY.Base["人Y1"]+CC.DirectY[JY.Base["人方向"]+1],3);
@@ -1366,18 +1385,27 @@ function Game_SMap()         --场景处理主函数
 					JY.D_Valid=nil;
                 end
             end
-		end
+        end
+    else
+	    JY.WalkDir = -1;
     end
 
     if JY.Status~=GAME_SMAP then
         return ;
     end
 
-    if direct ~= -1 then
-        AddMyCurrentPic();
-        x=JY.Base["人X1"]+CC.DirectX[direct+1];
-        y=JY.Base["人Y1"]+CC.DirectY[direct+1];
-        JY.Base["人方向"]=direct;
+    if JY.WalkDir ~= -1 then
+        local time = lib.GetTime();
+        if time - JY.LastWalkTime > CC.WalkSpeed then
+            AddMyCurrentPic();
+            x=JY.Base["人X1"]+CC.DirectX[JY.WalkDir+1];
+            y=JY.Base["人Y1"]+CC.DirectY[JY.WalkDir+1];
+            JY.Base["人方向"]=JY.WalkDir;
+            JY.LastWalkTime = time;
+        else
+            x=JY.Base["人X1"];
+            y=JY.Base["人Y1"];
+        end
     else
         x=JY.Base["人X1"];
         y=JY.Base["人Y1"];
@@ -2814,10 +2842,13 @@ function Talk(s,personid)            --最简单版本对话
 	TalkEx(s,JY.Person[personid]["头像代号"],flag);
 end
 
+function TalkEx(s,headid,flag)
+    return TalkEx(s, headid, flag, nil);
+end
 
 --复杂版本对话
 --s 字符串，必须加上*作为分行，如果里面没有*,则会自动加上
-function TalkEx(s,headid,flag)          --复杂版本对话
+function TalkEx(s,headid,flag, name)          --复杂版本对话
     local picw=100;       --最大头像图片宽高
 	local pich=100;
 	local talkxnum=12;         --对话一行字数
@@ -2877,6 +2908,10 @@ function TalkEx(s,headid,flag)          --复杂版本对话
                 local x=(picw-w)/2;
 				local y=(pich-h)/2;
 				lib.PicLoadCache(1,headid*2,xy[flag].headx+5+x,xy[flag].heady+5+y,1);
+				
+				if name ~= nil then
+				    DrawString(xy[flag].headx + 20, xy[flag].heady + boxpich, name,C_WHITE,CC.DefaultFont);
+				end
             end
             DrawBox(xy[flag].talkx, xy[flag].talky, xy[flag].talkx +boxtalkw, xy[flag].talky + boxtalkh,C_WHITE);
         end
@@ -2927,10 +2962,11 @@ end
 
 function instruct_1(talkid,headid,flag)        --对话
     local s=ReadTalk(talkid);
+    local name = face_name[headid]
 	if s==nil then        --对话id不存在
 	    return ;
 	end
-    TalkEx(s,headid,flag);
+    TalkEx(s,headid,flag, name);
 end
 
 --根据oldtalk.grp文件来idx索引文件。供后面读对话使用

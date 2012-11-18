@@ -105,10 +105,65 @@ int HAPI_GetKey(lua_State *pL)
 {
 	int keyPress;
     keyPress=JY_GetKey();
-	if (keyPress != -1) {
-		JY_Debug("getkey: %d", timeGetTime());
-	}
 	lua_pushinteger(pL,keyPress);
+	return 1;
+}
+
+int isKeyNeedRepeat(int scan)
+{
+	if (scan == SDL_SCANCODE_UP
+		|| scan == SDL_SCANCODE_DOWN
+		|| scan == SDL_SCANCODE_LEFT
+		|| scan == SDL_SCANCODE_RIGHT) {
+			return 1;
+	} else {
+		return 0;
+	}
+}
+
+int HAPI_GetKeyPress(lua_State* pL)
+{
+ 	int number;
+	int i;
+	Uint8* keyboard;
+	int keyPress;
+ 	static lastKeyboard[SDL_NUM_SCANCODES] = {0};
+	
+    keyPress=JY_GetKey();
+	if (keyPress != -1) {
+		lua_pushinteger(pL,keyPress);
+		keyboard = SDL_GetKeyboardState(&number);
+		memcpy(lastKeyboard, keyboard, number);
+		return 1;
+	}
+
+	
+	keyboard = SDL_GetKeyboardState(&number);
+	if (number < SDL_NUM_SCANCODES) {
+		memset(lastKeyboard, 0, SDL_NUM_SCANCODES);
+		lua_pushinteger(pL, -1);
+		return 1;
+	}
+
+	for (i = 0; i < number; ++i) {
+		if (keyboard[i] && !lastKeyboard[i] && isKeyNeedRepeat(i)) {
+			lua_pushinteger(pL, i);
+			memcpy(lastKeyboard, keyboard, number);
+			return 1;
+		}
+	}
+
+	for (i = 0; i < number; ++i) {
+		if (keyboard[i] && isKeyNeedRepeat(i)) {
+			lua_pushinteger(pL, i);
+			memcpy(lastKeyboard, keyboard, number);
+			return 1;
+		}
+	}
+
+	memset(lastKeyboard, 0, SDL_NUM_SCANCODES);
+	lua_pushinteger(pL, -1);
+
 	return 1;
 }
 
@@ -131,7 +186,6 @@ int HAPI_ShowSurface(lua_State *pL)
 
  int HAPI_CharSet(lua_State *pL)
 {
-    int length;
 	const char *src=lua_tostring(pL,1);
 	int flag=(int)lua_tonumber(pL,2);
 	static char dest[1024];

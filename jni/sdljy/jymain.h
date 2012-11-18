@@ -21,6 +21,9 @@
 
 #include "list.h" 
 
+#ifdef WIN32
+#include <Windows.h>
+#endif
 
 
 #ifdef __cplusplus

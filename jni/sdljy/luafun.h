@@ -31,6 +31,7 @@ extern "C" {
 int HAPI_EnableKeyRepeat(lua_State *pL);
 
  int HAPI_GetKey(lua_State *pL);
+ int HAPI_GetKeyPress(lua_State* pL);
 
  int HAPI_ShowSurface(lua_State *pL);
 

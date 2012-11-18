@@ -9,6 +9,7 @@
 
 #include "jymain.h"
 
+
 // 全程变量
 
 SDL_Surface* g_Surface=NULL;    // 游戏使用的视频表面
@@ -51,6 +52,7 @@ static const struct luaL_reg jylib [] = {
       {"Debug", HAPI_Debug},
 
       {"GetKey", HAPI_GetKey},
+	  {"GetKeyPress", HAPI_GetKeyPress},
       {"EnableKeyRepeat", HAPI_EnableKeyRepeat},
 
       {"Delay", HAPI_Delay},
@@ -128,6 +130,7 @@ static const struct luaL_reg bytelib [] = {
 // 主程序
 int main(int argc, char *argv[])
 {
+	DWORD old;
 	lua_State *pL_main;
 
 	remove(DEBUG_FILE);
