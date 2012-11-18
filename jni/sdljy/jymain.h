@@ -266,7 +266,8 @@ void VLine32(int x1,int x2,int y,int color, unsigned char *vbuffer, int lpitch);
 int JY_FillColor(int x1,int y1,int x2,int y2,int color);
 
 
-
+int SaveScreen(int x, int y, int w, int h);
+void LoadScreen(int index, int x, int y);
 int BlitSurface(SDL_Surface* lpdds, int x, int y ,int flag,int value);
 
 int JY_Background(int x1,int y1,int x2,int y2,int Bright);

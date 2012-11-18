@@ -44,7 +44,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\..\..\..\sdljy</OutDir>
+    <OutDir>..\..\..\..\sdlcy</OutDir>
     <IntDir>.\Debug\Obj</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>E:\llvm\3rdframework\sdl\include;E:\llvm\3rdframework\sdl_ttf;E:\llvm\3rdframework\sdl_image;E:\llvm\3rdframework\sdl_mixer;E:\llvm\3rdframework\smpeg;E:\jinyong\work\socooljy\jni\lua;E:\llvm\3rdframework\iconv\libiconv-1.14\include;$(IncludePath)</IncludePath>
@@ -128,7 +128,7 @@
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>..\..\..\..\sdljy\sdljy.exe</OutputFile>
+      <OutputFile>..\..\..\..\sdlcy\sdljy.exe</OutputFile>
       <AdditionalLibraryDirectories>../sdl/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>

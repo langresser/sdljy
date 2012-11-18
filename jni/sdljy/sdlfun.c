@@ -161,7 +161,16 @@ int ExitSDL(void)
 Uint32 ConvertColor(Uint32 color){
    Uint8 *p=(Uint8*)&color;
    return SDL_MapRGB(g_Surface->format,*(p+2),*(p+1),*p);
-}    
+}
+
+int SaveScreen(int x, int y, int w, int h)
+{
+
+}
+
+void LoadScreen(int index, int x, int y)
+{
+}
 
 
 // 初始化游戏数据
