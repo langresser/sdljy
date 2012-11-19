@@ -52,8 +52,16 @@ int HAPI_SaveSur(lua_State* pL)
 	int y=(int)lua_tonumber(pL,2);
 	int w=(int)lua_tonumber(pL,3);
 	int h=(int)lua_tonumber(pL,4);
+	int index = SaveScreen(x, y, w, h);
+	lua_pushnumber(pL, index);
+	return 0;
+}
 
-	SDL_Surface* screenTEMP = SDL_ConvertSurface(g_Surface, g_Surface->format, SDL_SWSURFACE);
+int HAPI_FreeSur(lua_State* pL)
+{
+	int index = (int)lua_tonumber(pL,1);
+	FreeScreen(index);
+	return 0;
 }
 
 int HAPI_LoadSur(lua_State* pL)
@@ -61,6 +69,8 @@ int HAPI_LoadSur(lua_State* pL)
 	int index = (int)lua_tonumber(pL,1);
 	int x=(int)lua_tonumber(pL,2);
 	int y=(int)lua_tonumber(pL,3);
+	LoadScreen(index, x, y);
+	return 0;
 }
 
 int HAPI_Background(lua_State *pL)

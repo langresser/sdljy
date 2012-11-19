@@ -53,6 +53,10 @@ int HAPI_EnableKeyRepeat(lua_State *pL);
 
  int HAPI_PlayMIDI(lua_State *pL);
 
+ int HAPI_SaveSur(lua_State* pL);
+ int HAPI_LoadSur(lua_State* pL);
+ int HAPI_FreeSur(lua_State* pL);
+
 
   int HAPI_PlayWAV(lua_State *pL);
   

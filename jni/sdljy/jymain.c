@@ -69,6 +69,9 @@ static const struct luaL_reg jylib [] = {
 
       {"ShowSurface", HAPI_ShowSurface},
       {"ShowSlow", HAPI_ShowSlow},
+	  {"SaveSur", HAPI_SaveSur},
+	  {"LoadSur", HAPI_LoadSur},
+	  {"FreeSur", HAPI_FreeSur},
 
       {"PicInit", HAPI_PicInit},
       {"PicGetXY", HAPI_GetPicXY},
@@ -130,7 +133,6 @@ static const struct luaL_reg bytelib [] = {
 // 主程序
 int main(int argc, char *argv[])
 {
-	DWORD old;
 	lua_State *pL_main;
 
 	remove(DEBUG_FILE);

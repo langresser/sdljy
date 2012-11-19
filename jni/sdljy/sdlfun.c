@@ -30,6 +30,10 @@ extern int g_EnableSound;
 extern int g_MusicVolume;
 extern int g_SoundVolume;
 
+#define MAX_SCREEN_NUM 50
+SDL_Surface* g_saveScreenArray[MAX_SCREEN_NUM] = {NULL};
+int g_currentScreen = -1;
+
 
 //过滤ESC、RETURN、SPACE键，使他们按下后不能重复。
 static int KeyFilter(void* userData, const SDL_Event *event)
@@ -85,6 +89,9 @@ static int KeyFilter(void* userData, const SDL_Event *event)
             break;
 		}
         break;
+	case SDL_QUIT:
+		SDL_Quit();
+		break;
     default: 
         break;
     }
@@ -165,11 +172,67 @@ Uint32 ConvertColor(Uint32 color){
 
 int SaveScreen(int x, int y, int w, int h)
 {
+	int i = 0;
+	SDL_Rect rect;
+	SDL_Surface* currentSurface;
 
+	rect.x = x;
+	rect.y = y;
+	rect.w = w;
+	rect.h = h;
+
+	currentSurface = SDL_CreateRGBSurface(g_Surface->flags, g_Surface->w, g_Surface->h,
+		g_Surface->format->BitsPerPixel, g_Surface->format->Rmask, g_Surface->format->Gmask,
+		g_Surface->format->Bmask, g_Surface->format->Amask);
+	SDL_BlitSurface(g_Surface, &rect, currentSurface, NULL);
+	
+	for (i = 0; i < MAX_SCREEN_NUM; ++i) {
+		if (g_saveScreenArray[i] == NULL) {
+			g_saveScreenArray[i] = currentSurface;
+			return i;
+		}
+	}
+
+	SDL_FreeSurface(g_saveScreenArray[0]);
+
+	g_saveScreenArray[0] = currentSurface;
+	return 0;
 }
 
 void LoadScreen(int index, int x, int y)
 {
+	SDL_Rect rect;
+	SDL_Surface* surface;
+	if (index < 0 || index >= MAX_SCREEN_NUM) { 
+		return;
+	}
+
+	if (!g_saveScreenArray[index]) {
+		return;
+	}
+
+	surface = g_saveScreenArray[index];
+	rect.x = x;
+	rect.y = y;
+	rect.w = surface->w;
+	rect.h = surface->h;
+	SDL_BlitSurface(surface, NULL, g_Surface, &rect);
+}
+
+void FreeScreen(int index)
+{
+	SDL_Surface* surface;
+	if (index < 0 || index >= MAX_SCREEN_NUM) { 
+		return;
+	}
+
+	if (!g_saveScreenArray[index]) {
+		return;
+	}
+
+	surface = g_saveScreenArray[index];
+	SDL_FreeSurface(surface);
+	g_saveScreenArray[index] = NULL;
 }
 
 
@@ -479,14 +542,159 @@ int JY_PlayWAV(const char *filename)
 int JY_GetKey()
 {
     SDL_Event event;
+	int x,y;
 	int keyPress=-1;
     while(SDL_PollEvent(&event)){   
 		switch(event.type){   
-        case SDL_KEYDOWN:  
-            keyPress=event.key.keysym.scancode;
+        case SDL_KEYDOWN:
+			switch (event.key.keysym.scancode) {
+			case SDL_SCANCODE_ESCAPE:
+				keyPress = 27;
+				break;
+			case SDL_SCANCODE_RETURN:
+				keyPress = 13;
+				break;
+			case SDL_SCANCODE_SPACE:
+				keyPress = 32;
+				break;
+			case SDL_SCANCODE_UP:
+				keyPress = 273;
+				break;
+			case SDL_SCANCODE_DOWN:
+				keyPress = 274;
+				break;
+			case SDL_SCANCODE_LEFT:
+				keyPress = 276;
+				break;
+			case SDL_SCANCODE_RIGHT:
+				keyPress = 275;
+				break;
+			case SDL_SCANCODE_1:
+				keyPress = 49;
+				break;
+			case SDL_SCANCODE_2:
+				keyPress = 50;
+				break;
+			case SDL_SCANCODE_3:
+				keyPress = 51;
+				break;
+			case SDL_SCANCODE_4:
+				keyPress = 52;
+				break;
+			case SDL_SCANCODE_5:
+				keyPress = 53;
+				break;
+			case SDL_SCANCODE_6:
+				keyPress =54 ;
+				break;
+			case SDL_SCANCODE_7:
+				keyPress = 55;
+				break;
+			case SDL_SCANCODE_8:
+				keyPress = 56;
+				break;
+			case SDL_SCANCODE_9:
+				keyPress = 57;
+				break;
+			case SDL_SCANCODE_0:
+				keyPress = 48;
+				break;
+			case SDL_SCANCODE_A:
+				keyPress = 97;
+				break;
+			case SDL_SCANCODE_B:
+				keyPress = 98;
+				break;
+			case SDL_SCANCODE_C:
+				keyPress = 99;
+				break;
+			case SDL_SCANCODE_D:
+				keyPress = 100;
+				break;
+			case SDL_SCANCODE_E:
+				keyPress = 101;
+				break;
+			case SDL_SCANCODE_F:
+				keyPress = 102;
+				break;
+			case SDL_SCANCODE_G:
+				keyPress = 103;
+				break;
+			case SDL_SCANCODE_H:
+				keyPress = 104;
+				break;
+			case SDL_SCANCODE_I:
+				keyPress = 105;
+				break;
+			case SDL_SCANCODE_J:
+				keyPress = 106;
+				break;
+			case SDL_SCANCODE_K:
+				keyPress = 107;
+				break;
+			case SDL_SCANCODE_L:
+				keyPress = 108;
+				break;
+			case SDL_SCANCODE_M:
+				keyPress = 109;
+				break;
+			case SDL_SCANCODE_N:
+				keyPress = 110;
+				break;
+			case SDL_SCANCODE_O:
+				keyPress = 111;
+				break;
+			case SDL_SCANCODE_P:
+				keyPress = 112;
+				break;
+			case SDL_SCANCODE_Q:
+				keyPress = 113;
+				break;
+			case SDL_SCANCODE_R:
+				keyPress = 114;
+				break;
+			case SDL_SCANCODE_S:
+				keyPress = 115;
+				break;
+			case SDL_SCANCODE_T:
+				keyPress = 116;
+				break;
+			case SDL_SCANCODE_U:
+				keyPress = 117;
+				break;
+			case SDL_SCANCODE_V:
+				keyPress = 118;
+				break;
+			case SDL_SCANCODE_W:
+				keyPress = 119;
+				break;
+			case SDL_SCANCODE_X:
+				keyPress = 120;
+				break;
+			case SDL_SCANCODE_Y:
+				keyPress = 121;
+				break;
+			case SDL_SCANCODE_Z:
+				keyPress = 122;
+				break;
+			default:
+				keyPress=event.key.keysym.scancode;
+				break;
+			}
             break;
         case SDL_MOUSEMOTION:
-            break;
+			x = event.motion.x;
+			y = event.motion.y;
+			keyPress = 1000000 + x * 1000 + y;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			x = event.motion.x;
+			y = event.motion.y;
+			keyPress = 2000000 + x * 1000 + y;
+			break;
+		case SDL_MOUSEBUTTONUP:
+			keyPress = SDL_SCANCODE_ESCAPE;
+			break;
         default: 
             break;
         }
