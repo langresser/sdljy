@@ -5547,8 +5547,10 @@ function Shurufa(x,y)
 	local word=""				--用于保存已输入的文本
 	while true do
 		local tmp;
+		lib.BeginTextInput();
 		pinyin,tmp=GetPinyin(x,y,word)
-			if tmp~=nil then word=tmp end
+		lib.EndTextInput();
+		if tmp~=nil then word=tmp end
 			if pinyin=="finish" then break;
 			elseif pinyin~=-1 and pinyin~="" then
 				word=word..SeleteHanzi(x,y,word,pinyin)
@@ -7209,27 +7211,19 @@ sz=
 end
 
 function GetPinyin(x,y,word)--输入拼音
-	local T3={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
-	local T4={"０","１","２","３","４","５","６","７","８","９"}
 	local str=""
 	while true do
 		ShowPinyin(x,y,word,str)
 	    local keypress=WaitKey();
         lib.Delay(100);
-		if keypress>96 and keypress<123 then
-			str=str..T3[keypress-96]
-		elseif keypress==8 then
-			if string.len(str)==0 then word=string.sub(word,1,-3)
-			else str=string.sub(str,1,-2)
-			end
-		elseif keypress>47 and keypress<58 then
-			return-1,word..T4[keypress-47];
-		elseif keypress==VK_RETURN and str=="" then
+    	if keypress==VK_RETURN and str=="" then
 			return "finish";
 		elseif keypress==VK_SPACE or keypress==VK_RETURN then
 			return str,word;
 		elseif keypress==VK_ESCAPE then
 			return -1;
+		elseif keypress ~= -1 and keypress < 99999 then
+		    str = lib.GetTextInput();
 		end
 	end
 end

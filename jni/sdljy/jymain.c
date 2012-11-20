@@ -54,6 +54,9 @@ static const struct luaL_reg jylib [] = {
       {"GetKey", HAPI_GetKey},
 	  {"GetKeyPress", HAPI_GetKeyPress},
       {"EnableKeyRepeat", HAPI_EnableKeyRepeat},
+	  {"BeginTextInput", HAPI_BeginTextInput},
+	  {"EndTextInput", HAPI_EndTextInput},
+	  {"GetTextInput", HAPI_GetTextInput},
 
       {"Delay", HAPI_Delay},
       {"GetTime", HAPI_GetTime},

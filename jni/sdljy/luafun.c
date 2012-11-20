@@ -14,6 +14,8 @@
 #include <MMSystem.h>
 #endif
 
+extern int g_enableTextInput;
+extern char g_currentTextInput[256];
 
 //以下为所有包装的lua接口函数，对应于每个实际的函数
 
@@ -145,6 +147,26 @@ int isKeyNeedRepeat(int scan)
 	} else {
 		return 0;
 	}
+}
+
+int HAPI_BeginTextInput(lua_State* pL)
+{
+	g_enableTextInput = 1;
+	memset(g_currentTextInput, 0, 256);
+	return 1;
+}
+
+int HAPI_EndTextInput(lua_State* pL)
+{
+	g_enableTextInput = 0;
+	memset(g_currentTextInput, 0, 256);
+	return 1;
+}
+
+int HAPI_GetTextInput(lua_State* pL)
+{
+	lua_pushstring(pL, g_currentTextInput);
+	return 1;
 }
 
 int HAPI_GetKeyPress(lua_State* pL)

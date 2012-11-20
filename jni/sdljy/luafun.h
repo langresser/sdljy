@@ -33,6 +33,10 @@ int HAPI_EnableKeyRepeat(lua_State *pL);
  int HAPI_GetKey(lua_State *pL);
  int HAPI_GetKeyPress(lua_State* pL);
 
+ int HAPI_BeginTextInput(lua_State* pL);
+ int HAPI_EndTextInput(lua_State* pL);
+ int HAPI_GetTextInput(lua_State* pL);
+
  int HAPI_ShowSurface(lua_State *pL);
 
  int HAPI_Delay(lua_State *pL);

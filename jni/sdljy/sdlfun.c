@@ -3,6 +3,9 @@
 // SDL 相关函数
 
 #include "jymain.h"
+
+#define USING_STATIC_LIBICONV 1
+#include "iconv.h"
  
 static Mix_Music *currentMusic=NULL;         //播放音乐数据，由于同时只播放一个，用一个变量
 
@@ -33,6 +36,9 @@ extern int g_SoundVolume;
 #define MAX_SCREEN_NUM 50
 SDL_Surface* g_saveScreenArray[MAX_SCREEN_NUM] = {NULL};
 int g_currentScreen = -1;
+
+int g_enableTextInput = 0;
+char g_currentTextInput[256] = {0};
 
 
 //过滤ESC、RETURN、SPACE键，使他们按下后不能重复。
@@ -688,12 +694,37 @@ int JY_GetKey()
 			keyPress = 1000000 + x * 1000 + y;
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			x = event.motion.x;
-			y = event.motion.y;
-			keyPress = 2000000 + x * 1000 + y;
+			if (event.button.button == SDL_BUTTON_LMASK) {
+				x = event.motion.x;
+				y = event.motion.y;
+				keyPress = 2000000 + x * 1000 + y;
+			}
 			break;
 		case SDL_MOUSEBUTTONUP:
-			keyPress = SDL_SCANCODE_ESCAPE;
+			if (event.button.button == SDL_BUTTON_RMASK) {
+				keyPress = 27;
+			}
+			break;
+		case SDL_TEXTINPUT:
+			{
+				if (g_enableTextInput) {
+					int ret, srcLen, outLen;
+					int currentLen;
+					char output[256];
+					char* dest;
+					const char* src;
+					iconv_t converter = iconv_open("gb18030//IGNORE", "UTF-8");
+					memset(output, 0, 256);
+					srcLen = strlen(event.text.text);
+					outLen = 256;
+					currentLen = strlen(g_currentTextInput);
+					src = event.text.text;
+					dest = output;
+					ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, &dest, (size_t *)&outLen);
+					iconv_close(converter);
+					strncpy(g_currentTextInput + currentLen, output, 255 - currentLen);
+				}
+			}
 			break;
         default: 
             break;

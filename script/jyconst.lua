@@ -2,16 +2,16 @@
 --设置全局变量CC，保存游戏中使用的常数
 function SetGlobalConst()
     -- SDL 键码定义，SDL_SCANCODE
-    VK_ESCAPE=41
-    VK_Y=28
-	VK_N=17
-	VK_SPACE=44
-	VK_RETURN=40
+     VK_ESCAPE=27
+    VK_Y=121
+	VK_N=110
+	VK_SPACE=32
+	VK_RETURN=13
 
-	SDLK_UP=82
-	SDLK_DOWN=81
-	SDLK_LEFT=80
-	SDLK_RIGHT=79
+	SDLK_UP=273
+	SDLK_DOWN=274
+	SDLK_LEFT=276
+	SDLK_RIGHT=275
 
 	if CONFIG.Rotate==0 then
 	    VK_UP=SDLK_UP;
