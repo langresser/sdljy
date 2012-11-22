@@ -337,7 +337,9 @@ function SBLNewGame()     --选择新游戏，设置主角初始属性
 	    DrawStrBoxWaitKey(CC.EVB124,C_WHITE,30)
 		JY.Person[0]["资质"]=-1;
 		while JY.Person[0]["资质"]==-1 do
+            lib.BeginTextInput();
 			local r=GetPinyin1(32,CC.ScreenH-CC.Fontbig*6)
+            lib.EndTextInput();
 			if T[r]~=nil and T[r]>-1 and T[r]<101 then
 				JY.Person[0]["资质"]=T[r]
 		    else
@@ -1485,7 +1487,9 @@ function Menu_MCCS()
                         say(CC.s63,119,5,CC.s64)    				
 			end
         else
-            local r=GetPinyin1(32,CC.ScreenH-CC.Fontbig*6)		  
+            lib.BeginTextInput();
+            local r=GetPinyin1(32,CC.ScreenH-CC.Fontbig*6)
+            lib.EndTextInput();
 			  for i=0,105 do
 				   if r==""..i then
 				      if JY.Scene[i]["进入条件"]==0 and JY.SubScene~=25 and i~=82 and i~=83 and i~=81 and i~=84 then
@@ -5553,10 +5557,10 @@ function Shurufa(x,y)
 		if tmp~=nil then word=tmp end
 			if pinyin=="finish" then break;
 			elseif pinyin~=-1 and pinyin~="" then
-				word=word..SeleteHanzi(x,y,word,pinyin)
-			end
+				return pinyin;
+            end
 	end
-return word
+return ""
 end
 
 function SeleteHanzi(x,y,word,pinyin)--选字
@@ -7219,7 +7223,7 @@ function GetPinyin(x,y,word)--输入拼音
     	if keypress==VK_RETURN and str=="" then
 			return "finish";
 		elseif keypress==VK_SPACE or keypress==VK_RETURN then
-			return str,word;
+			return str;
 		elseif keypress==VK_ESCAPE then
 			return -1;
 		elseif keypress ~= -1 and keypress < 99999 then
@@ -7229,25 +7233,19 @@ function GetPinyin(x,y,word)--输入拼音
 end
 
 function GetPinyin1(x,y)--输入拼音
-	local T3={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}
-	local T4={"0","1","2","3","4","5","6","7","8","9"}
 	local str=""
 	while true do
 		ShowPinyin1(x,y,str)
 	    local keypress=WaitKey();
         lib.Delay(100);
-		if keypress>96 and keypress<123 then
-			str=str..T3[keypress-96]
-		elseif keypress==8 then
-			str=string.sub(str,1,-2)
-		elseif keypress>47 and keypress<58 then
-			str=str..T4[keypress-47];
-		elseif keypress==VK_SPACE  then
-			str=str..' '
-		elseif keypress==VK_RETURN then
+    	if keypress==VK_RETURN and str=="" then
+			return "finish";
+		elseif keypress==VK_SPACE or keypress==VK_RETURN then
 			return str;
-		--elseif keypress==VK_ESCAPE then
-		--	return -1;
+		elseif keypress==VK_ESCAPE then
+			return -1;
+		elseif keypress ~= -1 and keypress < 99999 then
+		    str = lib.GetTextInput();
 		end
 	end
 end
@@ -10014,8 +10012,11 @@ OEVENTLUA[2003]=function()
 				for a=1,1000 do
 					 local b=""..a
 					 T[b]=a
-				end
+                 end
+
+                 lib.BeginTextInput();
 				local r=GetPinyin1(32,CC.ScreenH-CC.Fontbig*6)
+                lib.EndTextInput();
 			    if T[r]~=nil and T[r]<=items then
 				   instruct_32(item,-T[r]) 
 		           instruct_2(174,itemG[item]*T[r])

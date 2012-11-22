@@ -134,7 +134,7 @@ int  JY_CharSet(const char *src, char *dest, int flag)
 		outLen = srcLen + 1;
 	} else if (flag == 2) {
 		converter = iconv_open("UTF-16//IGNORE", "Big5");
-		outLen = srcLen * 2 + 21;
+		outLen = srcLen * 2 + 2;
 	} else if (flag == 3) {
 		converter = iconv_open("UTF-16//IGNORE", "gb18030");
 		outLen = srcLen * 2 + 2;
@@ -144,6 +144,33 @@ int  JY_CharSet(const char *src, char *dest, int flag)
 
 	ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, &dest, (size_t *)&outLen);
 
+	iconv_close(converter);
+
+    return ret;
+}
+
+int  JY_CharSetEx(const char *src, wchar_t *dest, int flag, int bufferSize)
+{
+	int ret, srcLen, outLen;
+	iconv_t converter;
+
+	if (!src || !dest) {
+		return 0;
+	}
+
+	ret = 0;
+	srcLen = strlen(src);
+	outLen = bufferSize;
+	
+	if (flag == 2) {
+		converter = iconv_open("UTF-16//IGNORE", "Big5");
+	} else if (flag == 3) {
+		converter = iconv_open("UTF-16//IGNORE", "gb18030");
+	} else {
+		return 0;
+	}
+
+	ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
 	iconv_close(converter);
 
     return ret;
@@ -164,7 +191,7 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
     SDL_Color c;   
 	SDL_Surface *fontSurface=NULL;
 	SDL_Rect rect;
-	Uint8 *tmp;
+	wchar_t *tmp;
 	int len;
 	int flag=0;
 
@@ -176,20 +203,21 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
 	c.g=(color & 0xff00)>>8;
 	c.b=(color & 0xff);
  
-	len = 2*strlen(str)+2;
-    tmp=(unsigned char*)malloc(len);  //分配两倍原字符串大小的内存，避免转换到unicode时溢出
+	len = (strlen(str) + 2) * sizeof(wchar_t);
+
+    tmp=(wchar_t*)malloc(len);  //分配两倍原字符串大小的内存，避免转换到unicode时溢出
 	memset(tmp, 0, len);
 
     if(charset==0){     //GBK
-        JY_CharSet(str, (char*)tmp,	3);      
+        JY_CharSetEx(str, tmp, 3, len);      
 	} else if(charset==1){ //big5
-        JY_CharSet(str,(char*)tmp,2);
+        JY_CharSetEx(str, tmp, 2, len);
 	} else{
         strcpy((char*)tmp,str);
 	}
 
 //	fontSurface=TTF_RenderUTF8_Solid(myfont, tmp, c);  //生成表面
-    fontSurface=TTF_RenderUNICODE_Solid(myfont, (Uint16*)tmp, c);  //生成表面
+    fontSurface=TTF_RenderUNICODE_Solid(myfont, tmp, c);  //生成表面
 
 	SafeFree(tmp);
 

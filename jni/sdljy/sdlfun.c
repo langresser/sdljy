@@ -683,6 +683,40 @@ int JY_GetKey()
 			case SDL_SCANCODE_Z:
 				keyPress = 122;
 				break;
+			case SDL_SCANCODE_BACKSPACE:
+				if (g_currentTextInput[0] == 0) {
+					break;
+				}
+
+				if (g_enableTextInput) {
+					int ret, srcLen, outLen;
+					int currentLen;
+					wchar_t output[256];
+					char* dest;
+					const char* src;
+					iconv_t converter2;
+					iconv_t converter;
+					converter = iconv_open("UTF-16//IGNORE", "gb18030");
+					memset(output, 0, 256 * sizeof(wchar_t));
+					srcLen = strlen(g_currentTextInput);
+					outLen = 256 * sizeof(wchar_t);
+					src = g_currentTextInput;
+					dest = (char*)output;
+					ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
+					iconv_close(converter);
+					output[wcslen(output) - 1] = 0;
+
+					srcLen = wcslen(output) * sizeof(wchar_t);
+					outLen = 256;
+					src = (char*)output;
+					dest = (char*)g_currentTextInput;
+					memset(g_currentTextInput, 0, 256);
+					converter2 = iconv_open("gb18030//IGNORE", "UTF-16");
+					ret = iconv(converter2, (const char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
+					iconv_close(converter2);
+				}
+				keyPress = 8;
+				break;
 			default:
 				keyPress=event.key.keysym.scancode;
 				break;
@@ -723,6 +757,7 @@ int JY_GetKey()
 					ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, &dest, (size_t *)&outLen);
 					iconv_close(converter);
 					strncpy(g_currentTextInput + currentLen, output, 255 - currentLen);
+					keyPress = 0;
 				}
 			}
 			break;

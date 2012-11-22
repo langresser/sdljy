@@ -103,6 +103,7 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
 //      = 3   GBK  --> Unicode
 // 注意要保证dest有足够的空间，一般建议取src长度的两倍+1，保证全英文字符也能转化为unicode
 int  JY_CharSet(const char *src, char *dest, int flag);
+int  JY_CharSetEx(const char *src, wchar_t *dest, int flag, int bufferSize);
 
 //PicCache.c
 

@@ -165,6 +165,8 @@ int HAPI_EndTextInput(lua_State* pL)
 
 int HAPI_GetTextInput(lua_State* pL)
 {
+	OutputDebugString(g_currentTextInput);
+	OutputDebugString("\n");
 	lua_pushstring(pL, g_currentTextInput);
 	return 1;
 }
