@@ -183,15 +183,44 @@ int HAPI_GetTextInput(lua_State* pL)
 	return 1;
 }
 
+#ifdef WIN32
 int HAPI_GetKeyPress(lua_State* pL)
 {
  	int number;
 	int i;
 	Uint8* keyboard;
 	int keyPress;
+    SDL_Event event;
+	int x,y;
  	static Uint8 lastKeyboard[SDL_NUM_SCANCODES] = {0};
-	
-    keyPress=JY_GetKey();
+
+    keyPress = -1;
+    while(SDL_PollEvent(&event)){
+		switch(event.type){
+            case SDL_KEYDOWN:
+                keyPress = event.key.keysym.scancode;
+                break;
+//            case SDL_MOUSEMOTION:
+//                x = event.motion.x;
+//                y = event.motion.y;
+//                keyPress = 1000000 + x * 1000 + y;
+//                break;
+//            case SDL_MOUSEBUTTONDOWN:
+//                if (event.button.button == SDL_BUTTON_LMASK) {
+//                    x = event.motion.x;
+//                    y = event.motion.y;
+//                    keyPress = 2000000 + x * 1000 + y;
+//                }
+//                break;
+//            case SDL_MOUSEBUTTONUP:
+//                if (event.button.button == SDL_BUTTON_RMASK) {
+//                    keyPress = 27;
+//                }
+            default:
+                break;
+        }
+    }
+
 	if (keyPress != -1) {
 		lua_pushinteger(pL,keyPress);
 		keyboard = SDL_GetKeyboardState(&number);
@@ -228,6 +257,17 @@ int HAPI_GetKeyPress(lua_State* pL)
 
 	return 1;
 }
+#else
+int HAPI_GetKeyPress(lua_State* pL)
+{
+    int keyPress;
+    keyPress=JY_GetKey();
+	lua_pushinteger(pL,keyPress);
+    SDL_GL_SwapBuffers();
+
+    return 1;
+}
+#endif
 
 int HAPI_EnableKeyRepeat(lua_State *pL)
 {

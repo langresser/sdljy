@@ -140,7 +140,7 @@ int LoadMMap_Sub(const char*filename,Sint16 **p)
         *p=(Sint16*) malloc(M_XMax*M_YMax*2);
 	}
 
-	if((fp=fopen(filename,"rb"))==NULL){
+	if((fp=open_file(filename,"rb"))==NULL){
         JY_Error("file not open ---%s",filename);
 		return 1;
 	}

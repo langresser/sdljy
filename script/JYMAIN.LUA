@@ -2176,6 +2176,7 @@ function ShowMenu(menuItem,numItem,numShow,x1,y1,x2,y2,isBox,isEsc,size,color,se
 	    ShowScreen();
 		keyPress=WaitKey();
 		lib.Delay(100);
+
 		if keyPress==VK_ESCAPE then                  --Esc ÍË³ö
 		    if isEsc==1 then
 		        break;
@@ -2215,6 +2216,10 @@ function ShowMenu(menuItem,numItem,numShow,x1,y1,x2,y2,isBox,isEsc,size,color,se
 		        end
 		    end
 		end
+
+    if keyPress == VK_UP or keyPress == VK_DOWN or keyPress == VK_LEFT or keyPress == VK_RIGHT then
+      lib.Delay(200);
+    end
     end
 
     Cls(x1,y1,x1+w+1,y1+h+1,0,1);

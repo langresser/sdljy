@@ -17,7 +17,7 @@ CONFIG.Rotate=0;         --屏幕是否旋转  0 不旋转 1 右转90度。CONFIG.Width/Heigh
                          --目前旋转暂时不支持播放mpeg
 
 CONFIG.Width  = 800;       -- 游戏图形窗口宽
-CONFIG.Height = 600;      -- 游戏图形窗口宽
+CONFIG.Height = 620;      -- 游戏图形窗口宽
 
 CONFIG.bpp  =16          -- 全屏时像素色深，一般为16或者32。在窗口模式时直接采用当前屏幕色深，此设置无效
                          -- 不支持8位色深。为提高速度，建议使用16位色深。
@@ -35,20 +35,19 @@ CONFIG.YScale = 9     -- 贴图高度的一半
 
 
 --设置各个数据文件的路径，如果是其他目录标志和windows不同的OS, 如linux，则改为合适的路径
-CONFIG.CurrentPath =".\\"
-CONFIG.DataPath=CONFIG.CurrentPath .. "data\\";
-CONFIG.PicturePath=CONFIG.CurrentPath .. "pic\\";
-CONFIG.SoundPath=CONFIG.CurrentPath .. "sound\\";
-CONFIG.ScriptPath=CONFIG.CurrentPath .. "..\\work\\socooljy\\script\\";
-CONFIG.OldEventPath=CONFIG.ScriptPath .. "oldevent\\";
-CONFIG.NewEventPath=CONFIG.ScriptPath .. "newevent\\";
+CONFIG.CurrentPath ="./"
+CONFIG.DataPath=CONFIG.CurrentPath .. "data/";
+CONFIG.PicturePath=CONFIG.CurrentPath .. "pic/";
+CONFIG.SoundPath=CONFIG.CurrentPath .. "sound/";
+CONFIG.ScriptPath=CONFIG.CurrentPath .. "script/";
+CONFIG.OldEventPath=CONFIG.ScriptPath .. "oldevent/";
+CONFIG.NewEventPath=CONFIG.ScriptPath .. "newevent/";
 
 CONFIG.JYMain_Lua=CONFIG.ScriptPath .. "jymain.lua";   --lua主程序名
 
 --显示字体文件。如果是windows，可直接给出系统目录下的字体名。
 --其他系统可以找个合适的truetype字体复制到游戏data或其他目录下，在这里给出路径和文件名
---CONFIG.FontName="c:\\windows\\fonts\\simsun.ttc";
-CONFIG.FontName=CONFIG.CurrentPath .. "font\\STKAITI.TTF";
+CONFIG.FontName=CONFIG.CurrentPath .. "font/stkaiti.ttf";
 CONFIG.DefaultFont=24
 
 CONFIG.OSCharSet=0      -- 显示字符集 0 简体 1 繁体

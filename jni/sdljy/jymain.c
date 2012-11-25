@@ -39,6 +39,8 @@ int g_SMapAddY;
 int g_WMapAddX;
 int g_WMapAddY;
 
+int g_currentSelectMod = 0;
+
 int g_MAXCacheNum=1000;     //最大缓存数量
 
 int g_LoadFullS=1;          //是否全部加载S文件

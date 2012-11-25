@@ -6,6 +6,7 @@
 
 #define USING_STATIC_LIBICONV 1
 #include "iconv.h"
+#include <wchar.h>
 
 #ifdef HAS_SDL_MPEG
 #include "smpeg.h"
@@ -44,6 +45,8 @@ int g_currentScreen = -1;
 int g_enableTextInput = 0;
 char g_currentTextInput[256] = {0};
 
+int g_currentDir = 0;
+int g_pressButton = 0;
 
 //过滤ESC、RETURN、SPACE键，使他们按下后不能重复。
 static int KeyFilter(void* userData, const SDL_Event *event)
@@ -130,8 +133,9 @@ int InitSDL(void)
     InitFont();  //初始化
     
 	r=SDL_InitSubSystem(SDL_INIT_AUDIO);
-    if(r<0)
+    if(r<0) {
         g_EnableSound=0;
+    }
 
     r=Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
 
@@ -556,6 +560,7 @@ int JY_PlayWAV(const char *filename)
 
 
 // 得到前面按下的字符
+#ifdef WIN32
 int JY_GetKey()
 {
     SDL_Event event;
@@ -701,7 +706,6 @@ int JY_GetKey()
 
 				if (g_enableTextInput) {
 					int ret, srcLen, outLen;
-					int currentLen;
 					wchar_t output[256];
 					char* dest;
 					const char* src;
@@ -713,7 +717,11 @@ int JY_GetKey()
 					outLen = 256 * sizeof(wchar_t);
 					src = g_currentTextInput;
 					dest = (char*)output;
+#ifdef WIN32
 					ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
+#else
+					ret = iconv(converter, (char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
+#endif
 					iconv_close(converter);
 					output[wcslen(output) - 1] = 0;
 
@@ -722,8 +730,13 @@ int JY_GetKey()
 					src = (char*)output;
 					dest = (char*)g_currentTextInput;
 					memset(g_currentTextInput, 0, 256);
+
 					converter2 = iconv_open("gb18030//IGNORE", "UTF-16");
+#ifdef WIN32
 					ret = iconv(converter2, (const char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
+#else
+					ret = iconv(converter2, (char**)&src, (size_t *)&srcLen, (char**)&dest, (size_t *)&outLen);
+#endif
 					iconv_close(converter2);
 				}
 				keyPress = 8;
@@ -765,7 +778,11 @@ int JY_GetKey()
 					currentLen = strlen(g_currentTextInput);
 					src = event.text.text;
 					dest = output;
+#ifdef WIN32
 					ret = iconv(converter, (const char**)&src, (size_t *)&srcLen, &dest, (size_t *)&outLen);
+#else
+					ret = iconv(converter, (char**)&src, (size_t *)&srcLen, &dest, (size_t *)&outLen);
+#endif
 					iconv_close(converter);
 					strncpy(g_currentTextInput + currentLen, output, 255 - currentLen);
 					keyPress = 0;
@@ -778,6 +795,42 @@ int JY_GetKey()
 	}	
 	return keyPress;
 }
+#else
+int JY_GetKey()
+{
+    int keyPress = -1;
+    
+    if (g_pressButton == 1) {
+        // 确定
+        g_pressButton = 0;
+        return 13;
+    } else if (g_pressButton == 2) {
+        // 取消
+        g_pressButton = 0;
+        return 27;
+    }
+
+    switch (g_currentDir) {
+        case 1:
+            keyPress = 273;
+            break;
+        case 2:
+            keyPress = 274;
+            break;
+        case 3:
+            keyPress = 276;
+            break;
+        case 4:
+            keyPress = 275;
+            break;
+        default:
+            keyPress = -1;
+            break;
+    }
+    
+    return keyPress;
+}
+#endif
 
 
 //设置裁剪
