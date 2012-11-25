@@ -21,6 +21,12 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+#ifdef WIN32
+#define open_file fopen
+#else
+#include "util_common.h"
+#endif
+
 
 /* prefix for open functions in C libraries */
 #define LUA_POF		"luaopen_"
@@ -330,7 +336,7 @@ static int ll_loadlib (lua_State *L) {
 
 
 static int readable (const char *filename) {
-  FILE *f = fopen(filename, "r");  /* try to open file */
+  FILE *f = open_file(filename, "r");  /* try to open file */
   if (f == NULL) return 0;  /* open failed */
   fclose(f);
   return 1;

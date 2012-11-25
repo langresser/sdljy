@@ -6,7 +6,11 @@
 
 #define USING_STATIC_LIBICONV 1
 #include "iconv.h"
- 
+
+#ifdef HAS_SDL_MPEG
+#include "smpeg.h"
+#endif
+
 static Mix_Music *currentMusic=NULL;         //播放音乐数据，由于同时只播放一个，用一个变量
 
 #define WAVNUM 5
@@ -247,6 +251,7 @@ int InitGame(void)
 {
     int w,h;
 
+#ifdef WIN32
 	if(g_Rotate==0){
 		w=g_ScreenW;
 		h=g_ScreenH;
@@ -255,12 +260,18 @@ int InitGame(void)
 		w=g_ScreenH;
 		h=g_ScreenW;
 	}
+#else
+    getScreenSize(&w, &h);
+#endif
 
-
+#ifdef WIN32
     if(g_FullScreen==0)
         g_Surface=SDL_SetVideoMode(w,h, 0, SDL_SWSURFACE);
 	else
 	    g_Surface=SDL_SetVideoMode(w, h, g_ScreenBpp, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN);
+#else
+    g_Surface=SDL_SetVideoMode(w, h, g_ScreenBpp, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN);
+#endif
 
 
 	if(g_Surface==NULL)

@@ -9,6 +9,9 @@
 
 #include "jymain.h"
 
+#ifdef HAS_SDL_MPEG
+#include "smpeg.h"
+#endif
 
 // 全程变量
 
@@ -132,35 +135,39 @@ static const struct luaL_reg bytelib [] = {
 
 
 
+lua_State * g_pL_main;
+extern void SDL_gameLoop();
 
 // 主程序
-int main(int argc, char *argv[])
+int SDL_main(int argc, char *argv[])
 {
-	lua_State *pL_main;
-
-	remove(DEBUG_FILE);
-    freopen(ERROR_FILE,"wt",stderr);    //设置stderr输出到文件
+	remove_file(DEBUG_FILE);
+    freopen_file(ERROR_FILE,"wt",stderr);    //设置stderr输出到文件
 
 	//初始化lua
-	pL_main=lua_open();
-    luaL_openlibs(pL_main);
+	g_pL_main=lua_open();
+    luaL_openlibs(g_pL_main);
 
-    Lua_Config(pL_main,CONFIG_FILE);        //读取lua配置文件，设置参数
+    Lua_Config(g_pL_main,CONFIG_FILE);        //读取lua配置文件，设置参数
 
     InitSDL();           //初始化SDL
 
-	InitGame();          //初始化游戏数据 
-
-    Lua_Main(pL_main);          //调用Lua主函数，开始游戏
-
-   //关闭lua
-    lua_close(pL_main);
-
-	ExitGame();       //释放游戏数据
- 
-    ExitSDL();        //退出SDL 
+	InitGame();          //初始化游戏数据
 
     return 0;
+}
+
+void SDL_gameLoop()
+{
+    Lua_Main(g_pL_main);          //调用Lua主函数，开始游戏
+    
+    //关闭lua
+    lua_close(g_pL_main);
+    
+	ExitGame();       //释放游戏数据
+    
+    ExitSDL();        //退出SDL
+    exit(0);
 }
 
 
@@ -220,8 +227,6 @@ int Lua_Config(lua_State *pL,const char *filename)
 
     lua_getglobal(pL,"CONFIG");            //读取config定义的值
 	g_Rotate=getfield(pL,"Rotate");
-	g_ScreenW=getfield(pL,"Width");
-	g_ScreenH= getfield(pL, "Height");
 	g_ScreenBpp=  getfield(pL, "bpp");
 	g_FullScreen= getfield(pL, "FullScreen");
 	g_XScale=  getfield(pL, "XScale");
@@ -244,7 +249,15 @@ int Lua_Config(lua_State *pL,const char *filename)
     g_PreLoadPicGrp =getfield(pL, "PreLoadPicGrp");
   
      getfieldstr(pL,"JYMain_Lua",JYMain_Lua);
-
+    
+#ifndef WIN32
+    getScreenSize(&g_ScreenW, &g_ScreenH);
+    setfield(pL, "Width", g_ScreenW);
+    setfield(pL, "Height", g_ScreenH);
+#else
+    g_ScreenW=getfield(pL,"Width");
+	g_ScreenH= getfield(pL, "Height");
+#endif
 	return 0;
 }
 
@@ -257,6 +270,12 @@ int getfield(lua_State *pL,const char *key)
 	result=(int)lua_tonumber(pL,-1);
 	lua_pop(pL,1);
 	return result;
+}
+
+void setfield(lua_State *pL,const char *key, int value)
+{
+    lua_pushnumber(pL, value);
+	lua_setfield(pL, -2, key);
 }
 
 //读取lua表中的字符串
@@ -294,7 +313,7 @@ int JY_Debug(const char * fmt,...)
     if(IsDebug==0)
         return 0;
 
-	fp=fopen(DEBUG_FILE,"a+t");
+	fp=open_file(DEBUG_FILE,"a+t");
 	time(&t);
     newtime=localtime(&t);
 	fprintf(fp,"%02d:%02d:%02d %s\n",newtime->tm_hour,newtime->tm_min,newtime->tm_sec,string);
@@ -337,7 +356,7 @@ int FileLength(const char *filename)
 {
     FILE   *f;  
     int ll;
-    if((f=fopen(filename,"rb"))==NULL){
+    if((f=open_file(filename,"rb"))==NULL){
         return 0;            // 文件不存在，返回
 	}
     fseek(f,0,SEEK_END);  

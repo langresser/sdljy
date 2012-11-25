@@ -44,7 +44,13 @@ int HAPI_FillColor(lua_State *pL)
 	int y2=(int)lua_tonumber(pL,4);
 	int color=(int)lua_tonumber(pL,5);
 
-    JY_FillColor(x1,y1,x2,y2,color);
+    if (x2 != 0 && y2 != 0) {
+        JY_FillColor(x1,y1,x2,y2,color);
+    } else {
+        int w, h;
+        getScreenSize(&w, &h);
+        JY_FillColor(x1,y1, w, h,color);
+    }
 	return 0;
 }
 
@@ -134,6 +140,8 @@ int HAPI_GetKey(lua_State *pL)
 	int keyPress;
     keyPress=JY_GetKey();
 	lua_pushinteger(pL,keyPress);
+    
+    SDL_GL_SwapBuffers();
 	return 1;
 }
 
@@ -165,8 +173,12 @@ int HAPI_EndTextInput(lua_State* pL)
 
 int HAPI_GetTextInput(lua_State* pL)
 {
+#ifdef WIN32
 	OutputDebugString(g_currentTextInput);
 	OutputDebugString("\n");
+#else
+    printf("%s\n", g_currentTextInput);
+#endif
 	lua_pushstring(pL, g_currentTextInput);
 	return 1;
 }
@@ -177,7 +189,7 @@ int HAPI_GetKeyPress(lua_State* pL)
 	int i;
 	Uint8* keyboard;
 	int keyPress;
- 	static lastKeyboard[SDL_NUM_SCANCODES] = {0};
+ 	static Uint8 lastKeyboard[SDL_NUM_SCANCODES] = {0};
 	
     keyPress=JY_GetKey();
 	if (keyPress != -1) {
@@ -688,7 +700,7 @@ int Byte_loadfile(lua_State *pL)
 	int length=(int)lua_tonumber(pL,4); 
     
 	FILE *fp;
-    if((fp=fopen(filename,"rb"))==NULL){
+    if((fp=open_file(filename,"rb"))==NULL){
         JY_Error("Byte_loadfile:file not open ---%s",filename);		
 		return 1;
 	}
@@ -706,7 +718,7 @@ int Byte_savefile(lua_State *pL)
 	int length=(int)lua_tonumber(pL,4);
 
 	FILE *fp;
-    if((fp=fopen(filename,"r+b"))==NULL){
+    if((fp=open_file(filename,"r+b"))==NULL){
         JY_Error("file not open ---%s",filename);
 		return 1;
 	}

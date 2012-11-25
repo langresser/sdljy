@@ -9,13 +9,11 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 #include "SDL_mixer.h"
-#ifdef HAS_SDL_MPEG
-    #include "smpeg.h"
-#endif
 
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#include "util_common.h"
  
 #include "luafun.h"
 
@@ -48,7 +46,7 @@ int Lua_Main(lua_State *pL);
 int Lua_Config(lua_State *pL,const char *filename);
 
 int getfield(lua_State *pL,const char *key);
-
+void setfield(lua_State *pL,const char *key, int value);
 
 int getfieldstr(lua_State *pL,const char *key,char *str);
 

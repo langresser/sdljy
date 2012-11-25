@@ -1,4 +1,4 @@
-#include "util.h"
+#include "util_common.h"
 
 #ifdef PAL_HAS_NATIVEMIDI
 #include "midi.h"
@@ -25,11 +25,7 @@
 #pragma comment(lib, "iconv.lib")
 #endif
 
-char *
-va(
-   const char *format,
-   ...
-)
+char * va(const char *format, ...)
 {
    static char string[256];
    va_list     argptr;
@@ -42,18 +38,18 @@ va(
 }
 
 
-char*   my_strlwr(   char*   str   )
+char* my_strlwr(char* str)
 {
-    char*   orig   =   str;
+    char* orig = str;
     //   process   the   string
-    for   (   ;   *str   != '\0';   str++   )
-        *str   =   tolower(*str);
-    return   orig;
+    for (; *str != '\0'; str++)
+        *str = tolower(*str);
+    return orig;
 }
 
 #ifdef __IPHONEOS__
 char g_application_dir[256] = {0};
-char g_resource_dir[256] = "../Documents/";
+char g_resource_dir[256] = {0};
 #elif defined __ANDROID__
 char g_application_dir[256] = {0};
 char g_resource_dir[256] = "/sdcard/sdlpal/";
@@ -67,6 +63,12 @@ FILE* open_file(const char* file_name, const char* read_mode)
     char szFileName[256] = {0};
 	char szTemp[256] = {0};
 	FILE* fp = NULL;
+    
+#ifdef __IPHONEOS__
+    if (g_resource_dir[0] == 0) {
+        initDir();
+    }
+#endif
 
 	strncpy(szFileName, file_name, sizeof(szFileName) - 1);
     my_strlwr(szFileName);
@@ -75,6 +77,8 @@ FILE* open_file(const char* file_name, const char* read_mode)
 	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_resource_dir, szFileName);
 //    printf("%s\n", szTemp);
 	
+//    printf("open_file in doc:%s\n", szTemp);
+
 	fp = fopen(szTemp, read_mode);
 
 	if (fp) {
@@ -101,12 +105,54 @@ FILE* open_file(const char* file_name, const char* read_mode)
 #endif
 
 	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_application_dir, szFileName);
+//    printf("open_file in app:%s\n", szTemp);
 	fp = fopen(szTemp, read_mode);
 	if (fp) {
 		return fp;
 	}
+    
+    printf("file not found:%s\n", szTemp);
 
 	return NULL;
+}
+
+void remove_file(const char* file_name)
+{
+    char szFileName[256] = {0};
+    char szTemp[256] = {0};
+    
+#ifdef __IPHONEOS__
+    if (g_resource_dir[0] == 0) {
+        initDir();
+    }
+#endif
+
+	strncpy(szFileName, file_name, sizeof(szFileName) - 1);
+    my_strlwr(szFileName);
+    
+	// 先查找资源目录，资源目录要求是可以读写的。如果有相同文件，优先读取资源目录下的。（更新文件）
+	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_resource_dir, szFileName);
+    remove(szTemp);
+}
+
+void freopen_file(const char * file, const char * mode, FILE * stderrfile)
+{
+    char szFileName[256] = {0};
+    char szTemp[256] = {0};
+    
+#ifdef __IPHONEOS__
+    if (g_resource_dir[0] == 0) {
+        initDir();
+    }
+#endif
+    
+	strncpy(szFileName, file, sizeof(szFileName) - 1);
+    my_strlwr(szFileName);
+    
+	// 先查找资源目录，资源目录要求是可以读写的。如果有相同文件，优先读取资源目录下的。（更新文件）
+	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_resource_dir, szFileName);
+    
+    freopen(szTemp, mode, stderrfile);
 }
 
 #ifdef ENABLE_LOG

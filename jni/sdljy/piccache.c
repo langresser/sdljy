@@ -124,7 +124,7 @@ int JY_PicLoadFile(const char*idxfilename, const char* grpfilename, int id)
 		return 1;
     }
 		//读取贴图idx文件
-	if((fp=fopen(idxfilename,"rb"))==NULL){
+	if((fp=open_file(idxfilename,"rb"))==NULL){
         JY_Error("JY_PicLoadFile: idx file not open ---%s",idxfilename);
 		return 1;
 	}
@@ -138,7 +138,7 @@ int JY_PicLoadFile(const char*idxfilename, const char* grpfilename, int id)
     pic_file[id].filelength=FileLength(grpfilename);
 
 		//读取贴图grp文件
-	if((fp=fopen(grpfilename,"rb"))==NULL){
+	if((fp=open_file(grpfilename,"rb"))==NULL){
         JY_Error("JY_PicLoadFile: grp file not open ---%s",grpfilename);
 		return 1;
 	}
@@ -459,7 +459,7 @@ static int LoadPallette(char *filename)
 	int i;
 	if(strlen(filename)==0)    
 		return 1;
-	if((fp=fopen(filename,"rb"))==NULL){
+	if((fp=open_file(filename,"rb"))==NULL){
         JY_Error("Pallette File not open ---%s",filename);
 		return 1;
 	}

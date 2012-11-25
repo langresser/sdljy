@@ -26,13 +26,6 @@ static UseFont Font[FONTNUM];         //保存已打开的字体
 
 static int currentFont=0;
 
-//字符集转换数组
-static Uint16 gbkj_f[128][256];        //GBK简体-->繁体
-static Uint16 gbkf_j[128][256] ;
-static Uint16 gbk_unicode[128][256] ;
-static Uint16 gbk_big5[128][256] ;
-static Uint16 big5_gbk[128][256] ;
-
 extern  SDL_Surface* g_Surface;    //屏幕表面
 
 //初始化

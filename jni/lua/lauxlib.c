@@ -24,6 +24,11 @@
 
 #include "lauxlib.h"
 
+#ifdef WIN32
+#define open_file fopen
+#else
+#include "util_common.h"
+#endif
 
 #define FREELIST_REF	0	/* free list of references */
 
@@ -548,7 +553,6 @@ static int errfile (lua_State *L, const char *what, int fnameindex) {
   return LUA_ERRFILE;
 }
 
-
 LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
   LoadF lf;
   int status, readstatus;
@@ -561,7 +565,7 @@ LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
   }
   else {
     lua_pushfstring(L, "@%s", filename);
-    lf.f = fopen(filename, "r");
+    lf.f = open_file(filename, "r");
     if (lf.f == NULL) return errfile(L, "open", fnameindex);
   }
   c = getc(lf.f);

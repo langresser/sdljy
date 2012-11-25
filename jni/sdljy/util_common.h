@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <stddef.h>
 #include <stdarg.h>
+#include "SDL.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -24,8 +25,11 @@ extern "C"
 #endif
 
 FILE* open_file(const char* file_name, const char* read_mode);
-char*   my_strlwr(char*   str);
+void remove_file(const char* file_name);
+void freopen_file(const char * file, const char * mode, FILE * stderrfile);
+char* my_strlwr(char* str);
 
+extern int isPad();
 extern void initDir();
 extern void getFileStatus(const char* pszName);
 
