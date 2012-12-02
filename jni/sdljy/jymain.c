@@ -156,6 +156,9 @@ int SDL_main(int argc, char *argv[])
 
 	InitGame();          //初始化游戏数据
 
+#ifdef WIN32
+	SDL_gameLoop();
+#endif
     return 0;
 }
 

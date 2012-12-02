@@ -150,7 +150,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\..\..\..\sdlcy\sdljy.exe</OutputFile>
       <AdditionalLibraryDirectories>../sdl/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;SDL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -260,7 +260,7 @@
     <ClCompile Include="libmad\timer.c" />
     <ClCompile Include="piccache.c" />
     <ClCompile Include="sdlfun.c" />
-    <ClCompile Include="util.c" />
+    <ClCompile Include="util_common.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\lua\lapi.h" />
@@ -317,10 +317,9 @@
     <ClInclude Include="libmad\stream.h" />
     <ClInclude Include="libmad\synth.h" />
     <ClInclude Include="libmad\timer.h" />
-    <ClInclude Include="util.h" />
+    <ClInclude Include="util_common.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="sdlpal.ico" />
     <CustomBuild Include="libmad\D.dat">
       <FileType>Document</FileType>
     </CustomBuild>
@@ -336,9 +335,6 @@
     <CustomBuild Include="libmad\sf_table.dat">
       <FileType>Document</FileType>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="sdlpal.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

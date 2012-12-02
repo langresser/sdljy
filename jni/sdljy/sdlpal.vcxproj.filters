@@ -8,9 +8,6 @@
     <Filter Include="adplug">
       <UniqueIdentifier>{49ebbf5e-fd1f-4cee-8c12-5e6d8219f389}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{ddd28ff1-51b9-4976-90fe-0d3d40c2f55d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="native_midi">
       <UniqueIdentifier>{07ee7aa7-49ad-4456-9950-d5eaafe7554d}</UniqueIdentifier>
     </Filter>
@@ -199,10 +196,10 @@
     <ClCompile Include="..\lua\print.c">
       <Filter>lua</Filter>
     </ClCompile>
-    <ClCompile Include="util.c">
+    <ClCompile Include="..\..\..\..\..\llvm\3rdframework\sdl\src\main\windows\SDL_windows_main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\llvm\3rdframework\sdl\src\main\windows\SDL_windows_main.c">
+    <ClCompile Include="util_common.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -369,19 +366,11 @@
     <ClInclude Include="..\lua\lzio.h">
       <Filter>lua</Filter>
     </ClInclude>
-    <ClInclude Include="util.h">
+    <ClInclude Include="util_common.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="sdlpal.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="sdlpal.ico">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="libmad\D.dat">
       <Filter>libmad</Filter>
     </CustomBuild>
