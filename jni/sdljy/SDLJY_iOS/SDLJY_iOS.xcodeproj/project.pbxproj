@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B188947169129B100E965E4 /* common in Resources */ = {isa = PBXBuildFile; fileRef = 3B188946169129B100E965E4 /* common */; };
+		3B188949169130F700E965E4 /* jinyong in Resources */ = {isa = PBXBuildFile; fileRef = 3B188948169130F700E965E4 /* jinyong */; };
+		3B18894B169130FC00E965E4 /* canglong in Resources */ = {isa = PBXBuildFile; fileRef = 3B18894A169130FC00E965E4 /* canglong */; };
 		3B1E68331661F213006BE78A /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E68321661F213006BE78A /* GameViewController.m */; };
 		3B1E683516621F6C006BE78A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B1E683416621F6C006BE78A /* Default.png */; };
 		3B1E683816622A57006BE78A /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E683716622A57006BE78A /* SettingViewController.m */; };
@@ -21,7 +24,7 @@
 		3B2DC2641660D72D006895DF /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC2631660D704006895DF /* libfreetype.a */; };
 		3B2DC2651660D72D006895DF /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC23D1660D6AA006895DF /* liblibpng.a */; };
 		3B2DC2661660D72D006895DF /* libSDL_mixer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC2461660D6BB006895DF /* libSDL_mixer.a */; };
-		3B2DC2671660D72D006895DF /* libSDL_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC2341660D696006895DF /* libSDL_ttf.a */; };
+		3B2DC2671660D72D006895DF /* libSDL2_ttf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC2341660D696006895DF /* libSDL2_ttf.a */; };
 		3B2DC2681660D72D006895DF /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC2291660D682006895DF /* libSDL2.a */; };
 		3B2DC2911660DBBB006895DF /* DianJinOfferPlatform.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC28E1660DBBA006895DF /* DianJinOfferPlatform.framework */; };
 		3B2DC2921660DBBB006895DF /* Log.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2DC28F1660DBBA006895DF /* Log.framework */; };
@@ -114,12 +117,7 @@
 		3B2DC53816612E67006895DF /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DC4AE16612E67006895DF /* util.cpp */; };
 		3B2DC53916612E67006895DF /* vhar128.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DC4B016612E67006895DF /* vhar128.cpp */; };
 		3B2DC53A16612E67006895DF /* video.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B2DC4B216612E67006895DF /* video.cpp */; };
-		3B2DC56716613400006895DF /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DC56116613400006895DF /* config.lua */; };
-		3B2DC56816613400006895DF /* data in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DC56216613400006895DF /* data */; };
-		3B2DC56916613400006895DF /* font in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DC56316613400006895DF /* font */; };
-		3B2DC56A16613400006895DF /* pic in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DC56416613400006895DF /* pic */; };
-		3B2DC56B16613400006895DF /* script in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DC56516613400006895DF /* script */; };
-		3B2DC56C16613400006895DF /* sound in Resources */ = {isa = PBXBuildFile; fileRef = 3B2DC56616613400006895DF /* sound */; };
+		3B73A52816919BA100735973 /* icon_144.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B73A52716919BA100735973 /* icon_144.png */; };
 		3BC3AF9616609EBC003232BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3AF9516609EBC003232BC /* UIKit.framework */; };
 		3BC3AF9816609EBC003232BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3AF9716609EBC003232BC /* Foundation.framework */; };
 		3BC3AF9A16609EBC003232BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC3AF9916609EBC003232BC /* CoreGraphics.framework */; };
@@ -289,6 +287,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B188946169129B100E965E4 /* common */ = {isa = PBXFileReference; lastKnownFileType = folder; name = common; path = ../../../../common; sourceTree = "<group>"; };
+		3B188948169130F700E965E4 /* jinyong */ = {isa = PBXFileReference; lastKnownFileType = folder; name = jinyong; path = ../../../../jinyong; sourceTree = "<group>"; };
+		3B18894A169130FC00E965E4 /* canglong */ = {isa = PBXFileReference; lastKnownFileType = folder; name = canglong; path = ../../../../canglong; sourceTree = "<group>"; };
 		3B1E68311661F213006BE78A /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameViewController.h; path = SDLJY_iOS/GameViewController.h; sourceTree = "<group>"; };
 		3B1E68321661F213006BE78A /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameViewController.m; path = SDLJY_iOS/GameViewController.m; sourceTree = "<group>"; };
 		3B1E683416621F6C006BE78A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -417,12 +418,7 @@
 		3B2DC4B116612E67006895DF /* vhar128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vhar128.h; sourceTree = "<group>"; };
 		3B2DC4B216612E67006895DF /* video.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = video.cpp; sourceTree = "<group>"; };
 		3B2DC4B316612E67006895DF /* video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = video.h; sourceTree = "<group>"; };
-		3B2DC56116613400006895DF /* config.lua */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = text; name = config.lua; path = ../../../../sdljy/config.lua; sourceTree = "<group>"; };
-		3B2DC56216613400006895DF /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../../../../sdljy/data; sourceTree = "<group>"; };
-		3B2DC56316613400006895DF /* font */ = {isa = PBXFileReference; lastKnownFileType = folder; name = font; path = ../../../../sdljy/font; sourceTree = "<group>"; };
-		3B2DC56416613400006895DF /* pic */ = {isa = PBXFileReference; lastKnownFileType = folder; name = pic; path = ../../../../sdljy/pic; sourceTree = "<group>"; };
-		3B2DC56516613400006895DF /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../../../../sdljy/script; sourceTree = "<group>"; };
-		3B2DC56616613400006895DF /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sound; path = ../../../../sdljy/sound; sourceTree = "<group>"; };
+		3B73A52716919BA100735973 /* icon_144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_144.png; sourceTree = SOURCE_ROOT; };
 		3BC3AF9116609EBC003232BC /* SDLJY_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDLJY_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BC3AF9516609EBC003232BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3BC3AF9716609EBC003232BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -487,7 +483,7 @@
 		3BC3B0001660A997003232BC /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzio.c; sourceTree = "<group>"; };
 		3BC3B0011660A997003232BC /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lzio.h; sourceTree = "<group>"; };
 		3BC3B0021660A997003232BC /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = print.c; sourceTree = "<group>"; };
-		3BC3B0231660A9CE003232BC /* charset.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = charset.c; path = ../charset.c; sourceTree = "<group>"; };
+		3BC3B0231660A9CE003232BC /* charset.c */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.c; name = charset.c; path = ../charset.c; sourceTree = "<group>"; };
 		3BC3B0241660A9CE003232BC /* jymain.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = jymain.c; path = ../jymain.c; sourceTree = "<group>"; };
 		3BC3B0251660A9CE003232BC /* jymain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = jymain.h; path = ../jymain.h; sourceTree = "<group>"; };
 		3BC3B0261660A9CE003232BC /* list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = list.h; path = ../list.h; sourceTree = "<group>"; };
@@ -539,7 +535,7 @@
 				3B2DC2641660D72D006895DF /* libfreetype.a in Frameworks */,
 				3B2DC2651660D72D006895DF /* liblibpng.a in Frameworks */,
 				3B2DC2661660D72D006895DF /* libSDL_mixer.a in Frameworks */,
-				3B2DC2671660D72D006895DF /* libSDL_ttf.a in Frameworks */,
+				3B2DC2671660D72D006895DF /* libSDL2_ttf.a in Frameworks */,
 				3B2DC2681660D72D006895DF /* libSDL2.a in Frameworks */,
 				3BC3AF9616609EBC003232BC /* UIKit.framework in Frameworks */,
 				3BC3AF9816609EBC003232BC /* Foundation.framework in Frameworks */,
@@ -578,7 +574,7 @@
 		3B2DC22D1660D696006895DF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3B2DC2341660D696006895DF /* libSDL_ttf.a */,
+				3B2DC2341660D696006895DF /* libSDL2_ttf.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -605,19 +601,6 @@
 				3B2DC2631660D704006895DF /* libfreetype.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		3B2DC2741660D9AE006895DF /* sdljy */ = {
-			isa = PBXGroup;
-			children = (
-				3B2DC56116613400006895DF /* config.lua */,
-				3B2DC56216613400006895DF /* data */,
-				3B2DC56316613400006895DF /* font */,
-				3B2DC56416613400006895DF /* pic */,
-				3B2DC56516613400006895DF /* script */,
-				3B2DC56616613400006895DF /* sound */,
-			);
-			name = sdljy;
 			sourceTree = "<group>";
 		};
 		3B2DC28D1660DBBA006895DF /* DianJinFramework */ = {
@@ -828,6 +811,7 @@
 		3BC3AF9B16609EBC003232BC /* SDLJY_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				3B73A52716919BA100735973 /* icon_144.png */,
 				3B2DC2D91660DBD7006895DF /* umFeedback.bundle */,
 				3B2DC2D51660DBCC006895DF /* libUMFeedback.a */,
 				3B2DC2D81660DBD4006895DF /* UMFeedback.h */,
@@ -835,7 +819,6 @@
 				3B2DC2D71660DBD1006895DF /* MobClick.h */,
 				3B2DC2941660DBC1006895DF /* DianJinOfferPlatformResources */,
 				3B2DC28D1660DBBA006895DF /* DianJinFramework */,
-				3B2DC2741660D9AE006895DF /* sdljy */,
 				3BC3B0511660A9F8003232BC /* icon_57.png */,
 				3BC3B0521660A9F8003232BC /* icon_72.png */,
 				3BC3B0531660A9F8003232BC /* icon_114.png */,
@@ -941,6 +924,9 @@
 		3BC3B02E1660A9F1003232BC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3B18894A169130FC00E965E4 /* canglong */,
+				3B188948169130F700E965E4 /* jinyong */,
+				3B188946169129B100E965E4 /* common */,
 				3B1E684216623AF3006BE78A /* aclick.png */,
 				3B1E684316623AF3006BE78A /* anormal.png */,
 				3B1E684416623AF3006BE78A /* bclick.png */,
@@ -1068,10 +1054,10 @@
 			remoteRef = 3B2DC22A1660D682006895DF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3B2DC2341660D696006895DF /* libSDL_ttf.a */ = {
+		3B2DC2341660D696006895DF /* libSDL2_ttf.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libSDL_ttf.a;
+			path = libSDL2_ttf.a;
 			remoteRef = 3B2DC2331660D696006895DF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1173,12 +1159,6 @@
 				3B2DC2D11660DBC1006895DF /* dianjin_uninstalled_normal.png in Resources */,
 				3B2DC2D21660DBC1006895DF /* dianjin_uninstalled_press.png in Resources */,
 				3B2DC2DA1660DBD7006895DF /* umFeedback.bundle in Resources */,
-				3B2DC56716613400006895DF /* config.lua in Resources */,
-				3B2DC56816613400006895DF /* data in Resources */,
-				3B2DC56916613400006895DF /* font in Resources */,
-				3B2DC56A16613400006895DF /* pic in Resources */,
-				3B2DC56B16613400006895DF /* script in Resources */,
-				3B2DC56C16613400006895DF /* sound in Resources */,
 				3B1E683516621F6C006BE78A /* Default.png in Resources */,
 				3B1E684816623AF3006BE78A /* aclick.png in Resources */,
 				3B1E684916623AF3006BE78A /* anormal.png in Resources */,
@@ -1186,6 +1166,10 @@
 				3B1E684B16623AF3006BE78A /* bnormal.png in Resources */,
 				3B1E684C16623AF3006BE78A /* gui_lock.png in Resources */,
 				3B1E684D16623AF3006BE78A /* pause.png in Resources */,
+				3B188947169129B100E965E4 /* common in Resources */,
+				3B188949169130F700E965E4 /* jinyong in Resources */,
+				3B18894B169130FC00E965E4 /* canglong in Resources */,
+				3B73A52816919BA100735973 /* icon_144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,6 +1369,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ADAM GEISS (8SJU4ZD534)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/DianJinFramework\"",
@@ -1416,6 +1401,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "524E7748-2EAD-4890-9AB3-05BAD58F0F27";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1426,6 +1412,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ADAM GEISS (8SJU4ZD534)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/DianJinFramework\"",
@@ -1455,6 +1442,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "524E7748-2EAD-4890-9AB3-05BAD58F0F27";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

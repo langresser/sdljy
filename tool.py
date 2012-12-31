@@ -12,6 +12,6 @@ def DirLower(dirName):
             os.rename(strFile, strFile.lower());
 
 
-DirLower("sdljy")
+DirLower("sdlcl")
 
 

@@ -10,12 +10,14 @@
     #import <DianJinOfferPlatform/DianJinTransitionParam.h>
 #endif
 
-extern int g_currentSelectMod;
+extern int g_app_type;
+extern int g_isInBackground;
 
 @implementation AppDelegate
 // iOS 4.x
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    g_isInBackground = 0;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -29,6 +31,7 @@ extern int g_currentSelectMod;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    g_isInBackground = 1;
 }
 
 // iOS 3.x
@@ -49,16 +52,16 @@ extern int g_currentSelectMod;
     [[DianJinOfferPlatform defaultPlatform] setOfferViewAutoRotate:YES];
 #endif
     
-    g_currentSelectMod = [[NSUserDefaults standardUserDefaults]integerForKey:@"mod"];
+    g_app_type = [[NSUserDefaults standardUserDefaults]integerForKey:@"mod"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onRecNewMsg:) name:UMFBCheckFinishedNotification object:nil];
 
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString  *plistPath = [paths objectAtIndex:0];
-    NSString* scriptDir = [plistPath stringByAppendingPathComponent:@"script"];
-    
-    NSFileManager* fm = [NSFileManager defaultManager];
-    [fm createDirectoryAtPath:scriptDir withIntermediateDirectories:YES attributes:nil error:nil];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString  *plistPath = [paths objectAtIndex:0];
+//    NSString* scriptDir = [plistPath stringByAppendingPathComponent:@"script"];
+//    
+//    NSFileManager* fm = [NSFileManager defaultManager];
+//    [fm createDirectoryAtPath:scriptDir withIntermediateDirectories:YES attributes:nil error:nil];
 
     /* Keep the launch image up until we set a video mode */
     self.uiwindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

@@ -12,6 +12,7 @@
 	<string>icon_57.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
+		<string>icon_144.png</string>
 		<string>icon_57.png</string>
 		<string>icon_72.png</string>
 		<string>icon_114.png</string>
@@ -31,6 +32,8 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIApplicationExitsOnSuspend</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

@@ -10,11 +10,22 @@
 #include <stdarg.h>
 #include "SDL.h"
 
+#define kGameJinyong 0
+#define kGameCanglong 1
+#define kGameCangyan 2
+
+#define kCharsesGB2312 0
+#define kCharsetBig5 1
+#define kCharsetUtf8 2
+#define kCharsetUnicode 3
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
+    
+extern int g_app_type;
+extern int g_charset;
 
 #ifndef NULL
 #define NULL (void*)0

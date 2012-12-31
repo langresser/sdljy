@@ -35,6 +35,21 @@ void initDir()
     
     strlcpy(g_application_dir, [[[NSBundle mainBundle]bundlePath]UTF8String], sizeof(g_application_dir));
     g_application_dir[strlen(g_application_dir)] = '/';
+    
+    NSFileManager* fmgr = [NSFileManager defaultManager];
+    NSString* sdljy = [plistPath stringByAppendingPathComponent:@"jinyong"];
+    NSString* sdlcl = [plistPath stringByAppendingPathComponent:@"canglong"];
+
+    [fmgr createDirectoryAtPath:sdljy withIntermediateDirectories:YES attributes:nil error:nil];
+    [fmgr createDirectoryAtPath:sdlcl withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    NSString* scripts = [sdljy stringByAppendingPathComponent:@"script"];
+    
+    [fmgr createDirectoryAtPath:scripts withIntermediateDirectories:YES attributes:nil error:nil];
+    
+    scripts = [sdlcl stringByAppendingPathComponent:@"script"];
+    
+    [fmgr createDirectoryAtPath:scripts withIntermediateDirectories:YES attributes:nil error:nil];
 }
 
 void getFileStatus(const char* pszName)

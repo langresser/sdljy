@@ -58,7 +58,11 @@ char g_application_dir[256] = {0};
 char g_resource_dir[256] = {0};
 #endif
 
-FILE* open_file(const char* file_name, const char* read_mode)
+int g_app_type = kGameJinyong;
+int g_charset = kCharsesGB2312;
+int g_isInBackground = 0;
+
+FILE* open_file_sub(const char* file_name, const char* read_mode, const char* subdir)
 {
     char szFileName[256] = {0};
 	char szTemp[256] = {0};
@@ -72,15 +76,12 @@ FILE* open_file(const char* file_name, const char* read_mode)
 
 	strncpy(szFileName, file_name, sizeof(szFileName) - 1);
     my_strlwr(szFileName);
-
+    
 	// 先查找资源目录，资源目录要求是可以读写的。如果有相同文件，优先读取资源目录下的。（更新文件）
-	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_resource_dir, szFileName);
-//    printf("%s\n", szTemp);
-	
-//    printf("open_file in doc:%s\n", szTemp);
-
+	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s%s", g_resource_dir, subdir,szFileName);
+    
 	fp = fopen(szTemp, read_mode);
-
+    
 	if (fp) {
 		return fp;
 	}
@@ -90,29 +91,67 @@ FILE* open_file(const char* file_name, const char* read_mode)
     if (strchr(read_mode, 'w') != 0) {
         // 从外部拷贝进来的存档可能因为文件所属不是mobile导致无法写入。删除旧文件，重新创建新文件
         remove(szTemp);
-
+        
         fp = fopen(szTemp, read_mode);
         if (fp) {
             return fp;
         }
-
+        
         return NULL;
     }
 #endif
-
+    
 #ifdef __ANDROID__
     return NULL;
 #endif
-
-	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_application_dir, szFileName);
-//    printf("open_file in app:%s\n", szTemp);
+    
+	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s%s", g_application_dir, subdir, szFileName);
+    //    printf("open_file in app:%s\n", szTemp);
 	fp = fopen(szTemp, read_mode);
 	if (fp) {
 		return fp;
 	}
-    
-    printf("file not found:%s\n", szTemp);
+        
+	return NULL;
+}
 
+FILE* open_file(const char* file_name, const char* read_mode)
+{
+    char szGame[64] = {0};
+	FILE* fp = NULL;
+    
+#ifdef __IPHONEOS__
+    if (g_resource_dir[0] == 0) {
+        initDir();
+    }
+#endif
+    switch (g_app_type) {
+        case kGameJinyong:
+            strncpy(szGame, "jinyong/", sizeof(szGame));
+            break;
+        case kGameCanglong:
+            strncpy(szGame, "canglong/", sizeof(szGame));
+            break;
+        case kGameCangyan:
+            strncpy(szGame, "cangyan/", sizeof(szGame));
+            break;
+        default:
+            break;
+    }
+    
+    fp = open_file_sub(file_name, read_mode, szGame);
+    
+    if (fp) {
+        return fp;
+    }
+    
+    fp = open_file_sub(file_name, read_mode, "common/");
+    if (fp) {
+        return fp;
+    }
+    
+    printf("file not found:%s\n", file_name);
+    
 	return NULL;
 }
 
@@ -120,6 +159,7 @@ void remove_file(const char* file_name)
 {
     char szFileName[256] = {0};
     char szTemp[256] = {0};
+    char szGame[64] = {0};
     
 #ifdef __IPHONEOS__
     if (g_resource_dir[0] == 0) {
@@ -130,8 +170,22 @@ void remove_file(const char* file_name)
 	strncpy(szFileName, file_name, sizeof(szFileName) - 1);
     my_strlwr(szFileName);
     
+    switch (g_app_type) {
+        case kGameJinyong:
+            strncpy(szGame, "jinyong/", sizeof(szGame));
+            break;
+        case kGameCanglong:
+            strncpy(szGame, "canglong/", sizeof(szGame));
+            break;
+        case kGameCangyan:
+            strncpy(szGame, "cangyan/", sizeof(szGame));
+            break;
+        default:
+            break;
+    }
+
 	// 先查找资源目录，资源目录要求是可以读写的。如果有相同文件，优先读取资源目录下的。（更新文件）
-	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_resource_dir, szFileName);
+	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s%s", g_resource_dir, szGame, szFileName);
     remove(szTemp);
 }
 
@@ -139,6 +193,7 @@ void freopen_file(const char * file, const char * mode, FILE * stderrfile)
 {
     char szFileName[256] = {0};
     char szTemp[256] = {0};
+    char szGame[64] = {0};
     
 #ifdef __IPHONEOS__
     if (g_resource_dir[0] == 0) {
@@ -149,8 +204,22 @@ void freopen_file(const char * file, const char * mode, FILE * stderrfile)
 	strncpy(szFileName, file, sizeof(szFileName) - 1);
     my_strlwr(szFileName);
     
+    switch (g_app_type) {
+        case kGameJinyong:
+            strncpy(szGame, "jinyong/", sizeof(szGame));
+            break;
+        case kGameCanglong:
+            strncpy(szGame, "canglong/", sizeof(szGame));
+            break;
+        case kGameCangyan:
+            strncpy(szGame, "cangyan/", sizeof(szGame));
+            break;
+        default:
+            break;
+    }
+    
 	// 先查找资源目录，资源目录要求是可以读写的。如果有相同文件，优先读取资源目录下的。（更新文件）
-	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s", g_resource_dir, szFileName);
+	snprintf(szTemp, sizeof(szTemp) - 1, "%s%s%s", g_resource_dir, szGame,szFileName);
     
     freopen(szTemp, mode, stderrfile);
 }

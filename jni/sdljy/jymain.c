@@ -39,8 +39,6 @@ int g_SMapAddY;
 int g_WMapAddX;
 int g_WMapAddY;
 
-int g_currentSelectMod = 0;
-
 int g_MAXCacheNum=1000;     //最大缓存数量
 
 int g_LoadFullS=1;          //是否全部加载S文件
@@ -233,6 +231,7 @@ int Lua_Config(lua_State *pL,const char *filename)
     lua_getglobal(pL,"CONFIG");            //读取config定义的值
 	g_Rotate=getfield(pL,"Rotate");
 	g_ScreenBpp=  getfield(pL, "bpp");
+    g_charset = getfield(pL, "charset");
 	g_FullScreen= getfield(pL, "FullScreen");
 	g_XScale=  getfield(pL, "XScale");
  	g_YScale=  getfield(pL, "YScale");

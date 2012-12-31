@@ -16,10 +16,11 @@
 #import "InAppPurchaseMgr.h"
 #import "GameViewController.h"
 
+#define kPurchaseCanglong @"kPurchaseCanglong"
 #define kPurchaseCangyan @"kPurchaseCangyan"
 
 int g_currentMB = 0;
-extern int g_currentSelectMod;
+extern int g_app_type;
 
 @implementation SettingViewController
 
@@ -203,11 +204,11 @@ extern int g_currentSelectMod;
             cell.textLabel.text = @"金庸原版";
             cell.detailTextLabel.text = @"怀旧推荐";
         } else if (indexPath.row == 1) {
-            imageLock.hidden = [self isPurchase:kPurchaseCangyan alert:NO];
+            imageLock.hidden = [self isPurchase:kPurchaseCanglong alert:NO];
             cell.textLabel.text = @"苍龙逐日";
             cell.detailTextLabel.text = @"v1.2美化版，最完美版本，没有之一";
         }
-        cell.accessoryType = (indexPath.row == g_currentSelectMod) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        cell.accessoryType = (indexPath.row == g_app_type) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     } else if (indexPath.section == 1) {
         static NSString* cellIdent = @"MyCellGongl";
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdent];
@@ -255,10 +256,8 @@ extern int g_currentSelectMod;
 #ifdef APP_FOR_APPSTORE
         [[InAppPurchaseMgr sharedInstance]purchaseProUpgrade];
 #else
-        costMB = 20;
-        if ([purchaseKey compare:kPurchaseCangyan] == 0) {
-            costMB = 50;
-        }
+        m_purchaseKey = purchaseKey;
+        costMB = 50;
 
         NSString* title = [NSString stringWithFormat:@"消耗%dM币解锁此项，您可以通过下载精品推荐应用的方式免费获取MB，当前MB:%d", costMB, g_currentMB];
         UIAlertView* alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:title delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"解锁", @"获取MB", nil];
@@ -282,21 +281,29 @@ extern int g_currentSelectMod;
         int mod = 0;
         switch (indexPath.row) {
             case 0:
-                [self onClickBack];
                 mod = 0;
                 break;
             case 1:
-                [self onClickBack];
+                if (![self isPurchase:kPurchaseCanglong alert:YES]) {
+                    return;
+                }
                 mod = 1;
                 break;
             default:
                 break;
         }
-        
-        if (mod != g_currentSelectMod) {
-            g_currentSelectMod = mod;
+
+        if (mod != g_app_type) {
+            g_app_type = mod;
             [m_tableView reloadData];
-            [[NSUserDefaults standardUserDefaults]setInteger:g_currentSelectMod forKey:@"mod"];
+            [[NSUserDefaults standardUserDefaults]setInteger:g_app_type forKey:@"mod"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"信息" message:@"选择完成，请重启游戏" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            alert.tag = 999;
+            [alert show];
+            
+            [self onClickBack];
         }
     
     } else if (indexPath.section == 1) {
@@ -338,14 +345,24 @@ extern int g_currentSelectMod;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
 {
-    if (buttonIndex == 1) {
-        g_currentMB -= costMB;
-        [[NSUserDefaults standardUserDefaults]setInteger:g_currentMB forKey:@"MB"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        [self updateMB];
-        costMB = 0;
-    } else if (buttonIndex == 2) {
-        [[DianJinOfferPlatform defaultPlatform]showOfferWall: self delegate:self];
+    if (alertView.tag == 999) {
+        exit(0);
+    } else {
+        if (buttonIndex == 1) {
+            if (g_currentMB < costMB) {
+                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"错误" message:[NSString stringWithFormat:@"M币不足，当前M币:%d",g_currentMB] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [alert show];
+            } else {
+                g_currentMB -= costMB;
+                [[NSUserDefaults standardUserDefaults]setInteger:g_currentMB forKey:@"MB"];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:m_purchaseKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                [self updateMB];
+                costMB = 0;
+            }
+        } else if (buttonIndex == 2) {
+            [[DianJinOfferPlatform defaultPlatform]showOfferWall: self delegate:self];
+        }
     }
 }
 @end

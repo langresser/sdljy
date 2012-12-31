@@ -31,6 +31,7 @@
     UILabel* labelMB;
     
     int costMB;
+    NSString* m_purchaseKey;
 }
 
 @end

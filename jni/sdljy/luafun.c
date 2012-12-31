@@ -140,8 +140,11 @@ int HAPI_GetKey(lua_State *pL)
 	int keyPress;
     keyPress=JY_GetKey();
 	lua_pushinteger(pL,keyPress);
-    
-    SDL_GL_SwapBuffers();
+ 
+    extern int g_isInBackground;
+    if (!g_isInBackground) {
+        SDL_GL_SwapBuffers();
+    }
 	return 1;
 }
 
