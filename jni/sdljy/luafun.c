@@ -144,6 +144,8 @@ int HAPI_GetKey(lua_State *pL)
     extern int g_isInBackground;
     if (!g_isInBackground) {
         SDL_GL_SwapBuffers();
+    } else {
+        SDL_Delay(50);
     }
 	return 1;
 }

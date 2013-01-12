@@ -17,21 +17,22 @@ extern int g_isInBackground;
 // iOS 4.x
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    g_isInBackground = 0;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    g_isInBackground = 1;
+//    [super applicationWillResignActive:application];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-     
+    g_isInBackground = 0;
+ //   [super applicationDidBecomeActive:application];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    g_isInBackground = 1;
 }
 
 // iOS 3.x
