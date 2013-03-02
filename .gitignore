@@ -16,3 +16,5 @@ Debug/
 *.suo
 .DS_Store
 /sdljy/
+/jni/sdljy/SDLJY_iOS/SDLJY_iOS.xcodeproj/xcuserdata/liujun.xcuserdatad/
+/jni/sdljy/SDLJY_iOS/SDLJY_iOS.xcodeproj/project.xcworkspace/xcuserdata/liujun.xcuserdatad/
