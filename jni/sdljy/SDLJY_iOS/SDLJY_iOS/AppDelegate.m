@@ -59,6 +59,7 @@ int g_isInBackground;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //    [MobClick setLogEnabled:YES];
+    [[UIApplication sharedApplication]setIdleTimerDisabled:YES];
     [MobClick startWithAppkey:kUMengAppKey];
     [UMFeedback checkWithAppkey:kUMengAppKey];
     

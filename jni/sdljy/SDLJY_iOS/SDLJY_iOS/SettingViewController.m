@@ -35,7 +35,16 @@ extern int g_app_type;
 
 -(void)loadView
 {
-    settingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+    int height = 320;
+    if (isPad()) {
+        height = 600;
+    }
+    
+    if (isPad()) {
+        settingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 800, height)];
+    } else {
+        settingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 480, height)];
+    }
     settingView.backgroundColor = [UIColor colorWithRed:240.0 / 255 green:248.0 / 255 blue:1.0 alpha:1.0];
     
     float offsetY = 0;
@@ -46,12 +55,20 @@ extern int g_app_type;
     transitionParam.animationSubType = kDJTransitionFromTop;
     transitionParam.duration = 1.0;
     [_banner setupTransition:transitionParam];
+    
+    if (isPad()) {
+        _banner.frame = CGRectMake(0, 0, 240, 50);
+    } else {
+        _banner.center = CGPointMake(240, 25);
+    }
+    
     [settingView addSubview:_banner];
+    [_banner startWithTimeInterval:30 delegate:self];
     offsetY = 50;
 #endif
-
+    
     if (!isPad()) {
-        UIGlossyButton* btnBack = [[UIGlossyButton alloc]initWithFrame:CGRectMake(220, offsetY, 80, 30)];
+        UIGlossyButton* btnBack = [[UIGlossyButton alloc]initWithFrame:CGRectMake(380, offsetY, 80, 30)];
         [btnBack setTitle:@"返回游戏" forState:UIControlStateNormal];
         [btnBack addTarget:self action:@selector(onClickBack) forControlEvents:UIControlEventTouchUpInside];
         
@@ -71,26 +88,38 @@ extern int g_app_type;
     [btnMB setGradientType:kUIGlossyButtonGradientTypeLinearSmoothBrightToNormal];
     [settingView addSubview:btnMB];
     
-    labelMB = [[UILabel alloc]initWithFrame:CGRectMake(100, offsetY, 100, 30)];
+    labelMB = [[UILabel alloc]initWithFrame:CGRectMake(100, offsetY, 140, 30)];
     labelMB.backgroundColor = [UIColor clearColor];
+    labelMB.text = [NSString stringWithFormat:@"当前M币:%d", g_currentMB];
     [settingView addSubview:labelMB];
     
     offsetY += 30;
     
-    m_tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, offsetY, 320, 430) style:UITableViewStyleGrouped];
+    if (isPad()) {
+        m_tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, offsetY, 700, height - 50) style:UITableViewStyleGrouped];
+    } else {
+        m_tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, offsetY, 480, height - 50) style:UITableViewStyleGrouped];
+    }
     m_tableView.delegate = self;
     m_tableView.dataSource = self;
     m_tableView.backgroundColor = [UIColor colorWithRed:240.0 / 255 green:248.0 / 255 blue:1.0 alpha:1.0];
     [m_tableView setBackgroundView:nil];
     [settingView addSubview:m_tableView];
-
+    
+#ifdef APP_FOR_APPSTORE
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onPurchaseOk) name:kIAPSucceededNotification object:nil];
+    [[InAppPurchaseMgr sharedInstance]loadStore];
+#else
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appActivatedDidFinish:) name:kDJAppActivateDidFinish object:nil];
+#endif
+    
     [self setView:settingView];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.contentSizeForViewInPopover = CGSizeMake(320, 480);
+    self.contentSizeForViewInPopover = CGSizeMake(800, 600);
 }
 
 - (void)viewDidUnload
@@ -99,14 +128,19 @@ extern int g_app_type;
     // Release any retained subviews of the main view.
 }
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -121,7 +155,7 @@ extern int g_app_type;
 
 -(void)updateMB
 {
-    labelMB.text = [NSString stringWithFormat:@"当前M币: %d", g_currentMB];
+    labelMB.text = [NSString stringWithFormat:@"当前M币:%d", g_currentMB];
 }
 
 -(void)onClickMB
@@ -193,7 +227,7 @@ extern int g_app_type;
             cell.selectionStyle = UITableViewCellSelectionStyleGray;
             
             UIImageView* imageLock = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gui_lock.png"]];
-            imageLock.frame = CGRectMake(280, 5, 15, 15);
+            imageLock.frame = CGRectMake(430, 5, 15, 15);
             imageLock.tag = 101;
             [cell.contentView addSubview:imageLock];
         }
@@ -259,8 +293,8 @@ extern int g_app_type;
         m_purchaseKey = purchaseKey;
         costMB = 50;
 
-        NSString* title = [NSString stringWithFormat:@"消耗%dM币解锁此项，您可以通过下载精品推荐应用的方式免费获取MB，当前MB:%d", costMB, g_currentMB];
-        UIAlertView* alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:title delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"解锁", @"获取MB", nil];
+        NSString* title = [NSString stringWithFormat:@"解锁(消耗%dMB)", costMB];
+        UIAlertView* alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您可以通过下载精品推荐应用的方式免费获取MB" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:title, @"获取MB", nil];
         [alertView show];
 #endif
     }
@@ -327,20 +361,9 @@ extern int g_app_type;
     }
 }
 
-- (void)appActivatedDidFinish:(NSDictionary *)resultDic
+- (void)appActivatedDidFinish:(NSNotification *)notice;
 {
-    NSLog(@"%@", resultDic);
-    NSNumber *result = [resultDic objectForKey:@"result"];
-    if ([result boolValue]) {
-        NSNumber *awardAmount = [resultDic objectForKey:@"awardAmount"];
-        NSString *identifier = [resultDic objectForKey:@"identifier"];
-        NSLog(@"app identifier = %@", identifier);
-        g_currentMB += [awardAmount floatValue];
-        [[NSUserDefaults standardUserDefaults]setInteger:g_currentMB forKey:@"MB"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        
-        [self updateMB];
-    }
+    [self updateMB];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;
@@ -359,6 +382,7 @@ extern int g_app_type;
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 [self updateMB];
                 costMB = 0;
+                [m_tableView reloadData];
             }
         } else if (buttonIndex == 2) {
             [[DianJinOfferPlatform defaultPlatform]showOfferWall: self delegate:self];

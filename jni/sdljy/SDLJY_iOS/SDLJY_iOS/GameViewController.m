@@ -10,6 +10,7 @@
 #import "util_common.h"
 
 extern int g_pressButton;
+extern int g_currentMB;
 
 @implementation GameViewController
 
@@ -71,7 +72,25 @@ extern int g_pressButton;
     [self.view addSubview:joystick];
     [self.view addSubview:btnA];
     [self.view addSubview:btnB];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appActivatedDidFinish:) name:kDJAppActivateDidFinish object:nil];
 }
+
+- (void)appActivatedDidFinish:(NSNotification *)notice;
+{
+    NSDictionary* resultDic = [notice object];
+    NSLog(@"%@", resultDic);
+    NSNumber *result = [resultDic objectForKey:@"result"];
+    if ([result boolValue]) {
+        NSNumber *awardAmount = [resultDic objectForKey:@"awardAmount"];
+        NSString *identifier = [resultDic objectForKey:@"identifier"];
+        NSLog(@"app identifier = %@", identifier);
+        g_currentMB += [awardAmount floatValue];
+        [[NSUserDefaults standardUserDefaults]setInteger:g_currentMB forKey:@"MB"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+}
+
 
 -(void)showSettingPopup:(BOOL)show
 {

@@ -636,6 +636,7 @@
 		3BC3B0511660A9F8003232BC /* icon_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_57.png; sourceTree = SOURCE_ROOT; };
 		3BC3B0521660A9F8003232BC /* icon_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_72.png; sourceTree = SOURCE_ROOT; };
 		3BC3B0531660A9F8003232BC /* icon_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_114.png; sourceTree = SOURCE_ROOT; };
+		858E427B16E36C0400444BFF /* SDLJY_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SDLJY_iOS.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1011,6 +1012,7 @@
 		3BC3AF9B16609EBC003232BC /* SDLJY_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				858E427B16E36C0400444BFF /* SDLJY_iOS.entitlements */,
 				17DB11D516E24E8600B8D346 /* DianJinFramework */,
 				17DB11D916E24E8600B8D346 /* DianJinOfferPlatformResources */,
 				3B73A52716919BA100735973 /* icon_144.png */,
@@ -1629,6 +1631,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_ENTITLEMENTS = DianJinOfferPlatformResources/DianJinConfigResource/DianJin.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ADAM GEISS (8SJU4ZD534)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1672,6 +1675,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_ENTITLEMENTS = DianJinOfferPlatformResources/DianJinConfigResource/DianJin.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ADAM GEISS (8SJU4ZD534)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
