@@ -136,7 +136,7 @@ static const struct luaL_reg bytelib [] = {
 
 
 lua_State * g_pL_main;
-extern void SDL_gameLoop();
+extern void SDL_mainLoop();
 
 // 主程序
 int SDL_main(int argc, char *argv[])
@@ -155,12 +155,12 @@ int SDL_main(int argc, char *argv[])
 	InitGame();          //初始化游戏数据
 
 #ifdef WIN32
-	SDL_gameLoop();
+	SDL_mainLoop();
 #endif
     return 0;
 }
 
-void SDL_gameLoop()
+void SDL_mainLoop()
 {
     Lua_Main(g_pL_main);          //调用Lua主函数，开始游戏
     

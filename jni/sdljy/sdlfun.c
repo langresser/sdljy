@@ -12,6 +12,8 @@
 #include "smpeg.h"
 #endif
 
+#include "util_common.h"
+
 static Mix_Music *currentMusic=NULL;         //播放音乐数据，由于同时只播放一个，用一个变量
 
 #define WAVNUM 5
@@ -337,7 +339,7 @@ int JY_LoadPicture(const char* str,int x,int y)
 		    SDL_FreeSurface(pic);
             pic=NULL;
         }
-        tmppic = IMG_Load(str);
+        tmppic = IMG_Load(get_file_path(str));
         if(tmppic){
 		    pic=SDL_DisplayFormat(tmppic);   // 改为当前表面的像素格式
  		    SDL_FreeSurface(tmppic);
@@ -502,7 +504,7 @@ int JY_PlayMIDI(const char *filename)
 
     StopMIDI();
 	
-	currentMusic=Mix_LoadMUS(filename);
+	currentMusic=Mix_LoadMUS(get_file_path(filename));
 
 	if(currentMusic==NULL){
 		JY_Error("Open music file %s failed!",filename);

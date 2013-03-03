@@ -155,6 +155,46 @@ FILE* open_file(const char* file_name, const char* read_mode)
 	return NULL;
 }
 
+const char* get_file_path(const char* file_name)
+{
+    char temp_path[1024] = {0};
+    static char s_output[256] = {0};
+    char szGame[64] = {0};
+    
+#ifdef __IPHONEOS__
+    if (g_resource_dir[0] == 0) {
+        initDir();
+    }
+#endif
+    switch (g_app_type) {
+        case kGameJinyong:
+            strncpy(szGame, "jinyong/", sizeof(szGame));
+            break;
+        case kGameCanglong:
+            strncpy(szGame, "canglong/", sizeof(szGame));
+            break;
+        case kGameCangyan:
+            strncpy(szGame, "cangyan/", sizeof(szGame));
+            break;
+        default:
+            break;
+    }
+    
+    snprintf(temp_path, sizeof(temp_path) - 1, "%s%s%s", g_application_dir, szGame, file_name);
+    if (access(temp_path, R_OK) == 0) {
+        snprintf(s_output, sizeof(s_output) - 1, "%s%s", szGame, file_name);
+        return s_output;
+    }
+    
+    snprintf(temp_path, sizeof(temp_path) - 1, "%s%s%s", g_application_dir, "common/", file_name);
+    if (access(temp_path, R_OK) == 0) {
+        snprintf(s_output, sizeof(s_output) - 1, "%s%s", "common/", file_name);
+        return s_output;
+    }
+    
+	return NULL;
+}
+
 void remove_file(const char* file_name)
 {
     char szFileName[256] = {0};

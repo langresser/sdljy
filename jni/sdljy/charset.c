@@ -77,7 +77,7 @@ static TTF_Font *GetFont(const char *filename,int size)
     }
 
 	if(myfont==NULL){    //没有打开
-		myfont =TTF_OpenFont(filename,size);           //打开新字体
+		myfont =TTF_OpenFont(get_file_path(filename),size);           //打开新字体
 		if(myfont==NULL){
 			JY_Error("GetFont error: can not open font file %s\n",filename);
 			return NULL;

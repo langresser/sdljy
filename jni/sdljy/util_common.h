@@ -36,6 +36,7 @@ extern int g_charset;
 #endif
 
 FILE* open_file(const char* file_name, const char* read_mode);
+const char* get_file_path(const char* file_name);
 void remove_file(const char* file_name);
 void freopen_file(const char * file, const char * mode, FILE * stderrfile);
 char* my_strlwr(char* str);
